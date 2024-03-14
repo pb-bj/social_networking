@@ -2,11 +2,6 @@ const mongoose = require('mongoose')
 const {ObjectId} = mongoose.Schema
 
 const postSchema = new mongoose.Schema({
-    postID: { 
-        type: ObjectId, 
-        required: true, 
-        unique: true
-    },
     
     userID: { 
         type: ObjectId, 
@@ -21,7 +16,8 @@ const postSchema = new mongoose.Schema({
 
     PostedAt: { 
         type: Date, 
-        default: Date.now }
+        default: Date.now ()
+    }
   });
 
   module.exports = mongoose.model('Post', postSchema);

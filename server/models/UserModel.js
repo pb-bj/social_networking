@@ -2,15 +2,7 @@ const mongoose = require('mongoose')
 const {ObjectId} = mongoose.Schema
 
 const userSchema = new mongoose.Schema({
-    userid: {
-        type: ObjectId,
-        required: true,
-        unique: true
-    },
-    name: { 
-        type: String,
-        required: true 
-    },
+
     username: {
         type: String,
         required: true, 
@@ -26,7 +18,8 @@ const userSchema = new mongoose.Schema({
         required: true 
     },
     profilePicture: { 
-        type: String 
+        type: String,
+        required: true
     }
 })
 
