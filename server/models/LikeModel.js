@@ -10,7 +10,8 @@ const likeSchema = new mongoose.Schema({
     post: { 
         type: ObjectId, 
         ref: 'Post', 
-        required: true }
+        required: true 
+    }
 });
 
 module.exports = mongoose.model('Like', likeSchema);
