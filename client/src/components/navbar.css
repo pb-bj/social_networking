@@ -1,0 +1,139 @@
+.navbarContainer{
+    height: 70px;
+    width: 100%;
+    background-color:rgb(40, 103, 197) ;
+    display: flex;
+    align-items: center;
+    position: sticky;
+    top: 0;
+
+}
+
+.navbarLeft{
+    flex: 3;
+   display: flex;
+}
+
+.logo{
+    font-size: 24px;
+    margin-left: 20px;
+    font-weight: bold;
+    color: rgb(255, 255, 255);
+    cursor: pointer;
+}
+
+.searchbar{
+    
+    margin-left: 20px;
+    margin-top: 3px;
+    height: 30px;
+    background-color: rgb(221, 221, 221);
+    border: none;
+    border-radius: 3px;
+    display: flex;
+    align-items: center;
+}
+
+.searchIcon{
+    font-size: 20px !important;
+    margin-right: 10px;
+    color: white;
+}
+.searchInput{
+    border: none;
+    width: 100%;
+    border-radius: 3px;
+    margin-left: 10px;
+    background-color: rgb(221, 221, 221) ;
+    color: white;
+}
+.searchInput:focus{
+    outline: none;
+}
+.navbarCenter{
+    flex: 5;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    color: rgb(231, 231, 231);
+}
+
+
+
+.navbarIcons{
+    display: flex;
+}
+.navbarIconItem{
+    margin-right: 35px;
+    cursor: pointer;
+    position: relative;
+    padding: 5px;
+    border-radius: 15%;
+    background-color: #1d5ab4;
+}
+.navbarIcons:hover{
+    
+}
+
+/* Adjust the size of specific icons */
+.MuiSvgIcon-root.homeIcon,
+.MuiSvgIcon-root.chatIcon,
+.MuiSvgIcon-root.NotifyIcon {
+    font-size: 25px; /* Adjust the size as needed */
+}
+
+.navbarIconBadge{
+    width: 15px;
+    height: 15px;
+   background-color: #F9F871;
+    border-radius: 50% ;
+    color: #2158aa;
+    font-weight: bolder;
+    position: absolute;
+    top: -5px;
+    right: -5px;
+  
+    display: flex;
+    justify-content: center;
+    font-size: 12px;
+}
+
+.navbarRight{
+   
+    flex: 3;
+    display: flex;
+
+
+}
+
+.navbarImg{
+    width: 25px;
+    height: 25px;
+    border-radius: 20%;
+    object-fit: cover;
+    cursor: pointer;
+}
+
+
+.profilebar{
+    
+    margin-left: 116px;
+    height: 35px;
+    width: 232px;
+    background-color: #1d5ab4;
+    border-radius: 3px;
+    display: flex;
+    align-items: center;
+    padding: 8px;
+}
+.profilename{
+  
+
+
+    margin-left: 10px;
+    margin-top: 15px;
+    color: white;
+    font-size: 14px;
+ 
+  
+}
