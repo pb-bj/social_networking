@@ -14,17 +14,10 @@ const postSchema = new mongoose.Schema({
     image : {
         type : String,
     },
-    likes : [
-        { type : String 
-    }],
-    followers : {
-        type : Array,
-        default : []
-    },
-    following : {
-        type : Array,
-        default : []
-    },
+   likes : {
+        type : Number,
+        default : 0,
+   }
   }, { timestamps : true });
 
   module.exports = mongoose.model('Post', postSchema);

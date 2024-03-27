@@ -12,7 +12,8 @@ exports.createUserPost = async (req, res) => {
                 }
                 res.status(201).json(newPost);
     } catch(error) {
-        res.status(500).json({ error : 'Internal Server Error' });
+        res.status(500).json({ message : error.message });
+        console.log(error);
     }
 };
 
@@ -30,38 +31,74 @@ exports.readFeedPost = async (req, res) => {
 
 exports.readUserPost = async ( req, res) => {
     try {
-        const { userId } = req.params 
-        let post = await PostModel.findById({ userId });
+        let post = await PostModel.findById(req.params.id);
             if(!post) {
                 return res.status(404).json({ error : 'No post available!' });
             }
-            res.status(200).status(post);
+            res.status(200).json(post);
     } catch(error) {
         res.status(500).json({ error : 'Internal Server Error' });
     }
 }
 
-exports.updatePost = async (req, res) => {
-    const { content, postImg } = req.body;
+exports.updateUserPost = async (req, res) => {
+    const { userId, content } = req.body;
     try {
-        let post = await PostModel.findByIdAndUpdate( req.params.id, {content, postImg }, { new : true });
-            if(!post) {
-                return res.status(400).json({ error : 'Failed to update post' });
-            }
-            res.status(200).json({ message : 'Post updated successfully' });
-    } catch(error) {
-        res.status(500).json({ error : 'Internal Server Error' });
+        const post = await PostModel.findByIdAndUpdate(req.params.id,{ userId, content }, { new: true } );
+
+        if (!post) {
+            return res.status(404).json({ error: 'Post not found' });
+        }
+
+        if (post.userId.toString() !== userId) {
+            return res.status(403).json({ error: 'You can update only your post' });
+        }
+
+        // Handle file upload if needed
+        if (req.file) {
+            post.image = req.file.path; 
+            await post.save(); 
+        }
+
+        res.status(200).json({ message: 'Post updated successfully', post });
+    } catch (error) {
+         res.status(500).json({ message : error.message });
+        console.log(error);
     }
 };
 
+
+// exports.deletePosts = async (req, res) => {
+//     try {
+//          let post = await PostModel.findById(req.params.id);
+//          if(post.userId === req.body.userId) {
+//                 await post.deleteOne();
+//             res.status(200).json({ message : 'post deleted successfully' });
+//          } else {
+//                  return res.status(404).json({ error : 'Not Found' });
+//          }
+//     } catch(error) {
+//         res.status(500).json({ message : error.message });
+//         console.log(error);
+//     }
+// }
+
 exports.deletePosts = async (req, res) => {
     try {
-         let post = await PostModel.findByIdAndDelete(req.params.id);
-            if(!post) {
-                return res.status(404).json({ error : 'Not Found' });
-            }
-            res.status(200).json({ message : 'post deleted successfully' });
-    } catch(error) {
-        res.status(500).json({ error : 'Internal Server Error' });
+        const  { userId } = req.body;
+        const post = await PostModel.findByIdAndDelete(req.params.id);
+
+        if (!post) {
+            return res.status(404).json({ error: 'Post not found' });
+        }
+
+        if (post.userId.toString() !== userId) {
+            return res.status(403).json({ error: 'You can delete only your post' });
+        }
+
+        res.status(200).json({ message: 'Post deleted successfully' });
+    } catch (error) {
+        res.status(500).json({ message : error.message });
+        console.error(error);
     }
-}
+};
