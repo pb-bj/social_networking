@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import Profile1 from "../assets/profile/profile1.jpg";
 
+import { Link } from "react-router-dom"; // Import Link from react-router-dom
+
 const Navbar = () => {
   const [dropdownVisible, setDropdownVisible] = useState(false);
 
@@ -40,7 +42,7 @@ const Navbar = () => {
           alt="Profile"
         />
         {dropdownVisible && (
-          <div className="dropDown rounded-md border bg-white top-7 shadow-md absolute right-0 mt-8 w-48 h-32 ">
+          <div className="dropDown rounded-md border bg-white top-7 shadow-md absolute right-0 mt-8 w-48 h-92 ">
             <div className="dropOption cursor-pointer px-10 py-5 hover:bg-slate-200 hover:rounded-t-md text-black flex items-center">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -50,8 +52,25 @@ const Navbar = () => {
               >
                 <path d="M10 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6ZM3.465 14.493a1.23 1.23 0 0 0 .41 1.412A9.957 9.957 0 0 0 10 18c2.31 0 4.438-.784 6.131-2.1.43-.333.604-.903.408-1.41a7.002 7.002 0 0 0-13.074.003Z" />
               </svg>
-              My profile
+              <Link to="../pages/MyProfile">My Profile</Link>
             </div>
+
+            <div className="dropOption cursor-pointer px-10 py-5 hover:bg-slate-200 hover:rounded-t-md text-black flex items-center">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 24 24"
+                fill="currentColor"
+                className="w-5 h-5 me-2"
+              >
+                <path
+                  fillRule="evenodd"
+                  d="M5.25 9a6.75 6.75 0 0 1 13.5 0v.75c0 2.123.8 4.057 2.118 5.52a.75.75 0 0 1-.297 1.206c-1.544.57-3.16.99-4.831 1.243a3.75 3.75 0 1 1-7.48 0 24.585 24.585 0 0 1-4.831-1.244.75.75 0 0 1-.298-1.205A8.217 8.217 0 0 0 5.25 9.75V9Zm4.502 8.9a2.25 2.25 0 1 0 4.496 0 25.057 25.057 0 0 1-4.496 0Z"
+                  clipRule="evenodd"
+                />
+              </svg>
+              Notification
+            </div>
+
             <div className="dropOption cursor-pointer px-10 py-5 hover:bg-slate-200 hover:rounded-b-md text-black flex items-center">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
