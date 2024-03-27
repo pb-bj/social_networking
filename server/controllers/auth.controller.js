@@ -8,9 +8,13 @@ const tokenModel = require('../models/token.model');
 exports.registerUserAccount = async (req, res) => {
     try {
         const { firstName, lastName, gender, email, password } = req.body;
+        // checking for exisiting user
+        let user = await UserModel.findOne({ email });
+            if(user) {
+                return res.status(400).json({ message : "User already exits " });
+            }
         let salt = await bcrypt.genSalt(10)
         let hashedPassword = await bcrypt.hash(password, salt)
-
 
         // creating new user
          let user = await UserModel.create({ firstName, lastName, gender, email, password : hashedPassword });
@@ -39,7 +43,8 @@ exports.registerUserAccount = async (req, res) => {
         })            
         res.status(201).json({ message : 'User register successfully', user : user });
     } catch(error) {
-        res.status(500).json({ error : 'Register Failed '});
+        res.status(500).json({ message : error.message });
+        console.log('Error in register', error);
     }
 };
 

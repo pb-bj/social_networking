@@ -22,6 +22,7 @@ const userSchema = new mongoose.Schema({
     },
     password: { 
         type: String,
+        minLength : 6,
         required: true 
     },
     isVerified: {
@@ -30,5 +31,15 @@ const userSchema = new mongoose.Schema({
     }
 
 });
+    },
+    followers : {
+        type : [String],
+        default : [] 
+    },
+    followings : {
+        type : [String],
+        default : [] 
+    },
+}, { timestamps : true } );
 
 module.exports = mongoose.model("User", userSchema)
