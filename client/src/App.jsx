@@ -3,7 +3,7 @@ import Home from "./pages/Home";
 import Footer from "./components/Footer";
 import MyProfile from "./pages/MyProfile";
 import Navbar from "./components/Navbar";
-// import Layout from "./Layout"
+import Layout from "./Layout"
 import Login from "./pages/Login"
 import Register from "./pages/Register"
 import ResetPassword from "./pages/ResetPassword"
