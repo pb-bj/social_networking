@@ -2,7 +2,8 @@ const PostModel = require('../models/post.model');
 
 exports.createUserPost = async (req, res) => {
     try {
-        const { userId, content } =  req.body;
+        const { content } =  req.body;
+        const userId = req.user._id;
         if( !req.file ) {
             return res.status(400).json({ error : 'Please provide the image for your post' })
         }
@@ -31,7 +32,9 @@ exports.readFeedPost = async (req, res) => {
 
 exports.readUserPost = async ( req, res) => {
     try {
-        let post = await PostModel.findById(req.params.id);
+        const postId = req.params.id;
+        const userId = req.user._id;
+        let post = await PostModel.findById({ _id : postId, userId });
             if(!post) {
                 return res.status(404).json({ error : 'No post available!' });
             }
@@ -42,58 +45,41 @@ exports.readUserPost = async ( req, res) => {
 }
 
 exports.updateUserPost = async (req, res) => {
-    const { userId, content } = req.body;
+    const { content } = req.body;
+    const userId = req.user._id;
+    const postId = req.params.id;
+
     try {
-        const post = await PostModel.findByIdAndUpdate(req.params.id,{ userId, content }, { new: true } );
+        const post = await PostModel.findByIdAndUpdate({
+                _id: postId, userId
+            },
+            { $set : { content}, new : true }
+        );
 
         if (!post) {
             return res.status(404).json({ error: 'Post not found' });
         }
 
-        if (post.userId.toString() !== userId) {
-            return res.status(403).json({ error: 'You can update only your post' });
-        }
-
-        // Handle file upload if needed
         if (req.file) {
             post.image = req.file.path; 
             await post.save(); 
         }
 
-        res.status(200).json({ message: 'Post updated successfully', post });
+        res.status(200).json({ message: 'Post updated successfully' });
     } catch (error) {
          res.status(500).json({ message : error.message });
         console.log(error);
     }
 };
 
-
-// exports.deletePosts = async (req, res) => {
-//     try {
-//          let post = await PostModel.findById(req.params.id);
-//          if(post.userId === req.body.userId) {
-//                 await post.deleteOne();
-//             res.status(200).json({ message : 'post deleted successfully' });
-//          } else {
-//                  return res.status(404).json({ error : 'Not Found' });
-//          }
-//     } catch(error) {
-//         res.status(500).json({ message : error.message });
-//         console.log(error);
-//     }
-// }
-
 exports.deletePosts = async (req, res) => {
     try {
-        const  { userId } = req.body;
-        const post = await PostModel.findByIdAndDelete(req.params.id);
+        const userId = req.user._id;
+        const postId = req.params.id;
 
+        const post = await PostModel.findByIdAndDelete({ _id: postId, userId });
         if (!post) {
             return res.status(404).json({ error: 'Post not found' });
-        }
-
-        if (post.userId.toString() !== userId) {
-            return res.status(403).json({ error: 'You can delete only your post' });
         }
 
         res.status(200).json({ message: 'Post deleted successfully' });
