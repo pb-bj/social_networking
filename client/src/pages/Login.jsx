@@ -1,4 +1,4 @@
-import formImg1 from '../assets/images/form_bg.png'
+import formImg1 from '../assets/images/form_bg.jpg'
 import { Link } from 'react-router-dom'
 const Login = () => {
   return (
@@ -8,13 +8,13 @@ const Login = () => {
 
     {/* login container */}
     <div className="w-full md:h-fit lg:h-fit lg:py-0 
-    flex rounded-xl overflow-hidden shadow-xl">
+    flex rounded-xl overflow-hidden">
 
     {/* content LEFT */}
-    <div className="w-full bg-blue-500 p-10 2xl:px-20 flex flex-col justify-center">
+    <div className="w-full bg-blue-500 h-full p-7 2xl:px-20 md:h-full">
 
         {/* form heading */}
-        <div className="w-full my-4 md:ml-10">
+        <div className="w-full md:ml-10">
             <span className="text-white font-bold text-5xl my-[2rem]">Socialize</span>
             <p className="text-white text-base font-medium mt-4">Login to your account</p>
             <span className="text-md text-white">Welcome Back</span>
@@ -42,7 +42,7 @@ const Login = () => {
 
 
         {/* content RIGHT */}
-        <div className="hidden md:w-[75%] lg:flex flex-col items-center justify-center ">
+        <div className="hidden md:w-full lg:flex flex-col items-center justify-center ">
             <div className="relative w-full h-full">
                 <img src={formImg1} alt="form image" className='w-full h-full object-cover'/>
             </div>
