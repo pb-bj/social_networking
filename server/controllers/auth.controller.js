@@ -14,7 +14,7 @@ exports.registerUserAccount = async (req, res) => {
         let hashedPassword = await bcrypt.hash(password, salt)
 
         // creating new user
-         user = await UserModel.create({ firstName, lastName, gender, email, password : hashedPassword });
+        user = await UserModel.create({ firstName, lastName, gender, email, password : hashedPassword });
         if(!user) {
             return res.status(400).json({ error : 'Failed to register user!' });        
         }

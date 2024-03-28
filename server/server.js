@@ -1,4 +1,5 @@
 const express = require('express');
+const cors = require('cors');
 const authRoute = require('./routers/auth.route');
 const postRoute = require('./routers/posts.route');
 
@@ -14,6 +15,7 @@ app.use(express.urlencoded({ extended : true }));
 
 app.use('/auth', authRoute);
 app.use('/api', postRoute);
+app.use(cors)
 
 app.use('/public/uploads', express.static('public/uploads'))
 
