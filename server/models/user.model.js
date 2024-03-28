@@ -25,10 +25,10 @@ const userSchema = new mongoose.Schema({
         minLength : 6,
         required: true 
     },
-    isVerified: {
-        type: Boolean,
-        default: false
-    },
+    // isVerified: {
+    //     type: Boolean,
+    //     default: false
+    // },
     followers : {
         type : [String],
         default : [] 
