@@ -1,9 +1,6 @@
 const UserModel = require('../models/user.model');
 const bcrypt = require('bcrypt');
-const TokenModel = require('../models/token.model')
-const crypto = require('crypto') //for encryption
-const sendEmail = require('../utils/sendEmail');
-const tokenModel = require('../models/token.model');
+const jwt = require('jsonwebtoken');
 
 exports.registerUserAccount = async (req, res) => {
     try {
@@ -17,31 +14,15 @@ exports.registerUserAccount = async (req, res) => {
         let hashedPassword = await bcrypt.hash(password, salt)
 
         // creating new user
-         let user = await UserModel.create({ firstName, lastName, gender, email, password : hashedPassword });
+         user = await UserModel.create({ firstName, lastName, gender, email, password : hashedPassword });
         if(!user) {
             return res.status(400).json({ error : 'Failed to register user!' });        
         }
-        //generate token and send in mail
-        let token = await TokenModel.create({
-            user:user._id,
-            token: crypto.randomBytes(10).toString('hex')
-        })
-        if(!token) {
-            return res.status(400).json({ error : 'Something went wrong!' });        
-        }
+        
+        // sign in token
+        const token = jwt.sign({ _id : user._id }, process.env.JWT_SECRET);
 
-        // verify url
-
-        const verify_url = `http://localhost:5000/auth/verifyuser/${token.token}`
-
-        sendEmail({
-            from: "noreply@something.com",
-            to: email,
-            subject:"Verification Email",
-            text: "Click on the following link to verify your email. " + token.token,
-            html: `<a href= '${verify_url}'><button>Verify your account.</button></a>`
-        })            
-        res.status(201).json({ message : 'User register successfully', user : user });
+            res.header('Authorization', token).json({ user, token });
     } catch(error) {
         res.status(500).json({ message : error.message });
         console.log('Error in register', error);
@@ -51,42 +32,18 @@ exports.registerUserAccount = async (req, res) => {
 exports.loginUserAccount = async (req, res) => {
     try {
         const { email, password } = req.body;
-        let checkUserEmail = await UserModel.findOne({ email })
-        let checkUserPassword = await bcrypt.compare(password, password);
-            if( !checkUserEmail && !checkUserPassword) {
+        let checkUser = await UserModel.findOne({ email })
+        let validatePassword = await bcrypt.compare(password, checkUser.password);
+            if( !checkUser || !validatePassword ) {
                 return res.status(400).json({ error : "Invalid credentials" });
             } 
-            if(!checkUserEmail.isVerified){
-                return res.status(400).json({error:"User not verified. Verify first."})
-            }
-            res.status(200).json({ message : 'User login successfull' });
+
+        const token = jwt.sign({ _id: checkUser._id }, process.env.JWT_SECRET);    
+        res.header('Authorization', token).json({ message : 'User login successful', token });
    } catch(error) {
-        res.status(500).json({ error : 'Failed to Login' });
+        res.status(500).json({ message : error.message });
+        console.log(error)
     }
 };
 
-//verify
-exports.verifyEmail = async (req,res) =>{
-    //verifying token
-    let token = await TokenModel.findOne({token: req.params.token})
-    if(!token) {
-        return res.status(400).json({ error : 'Invalid token or the token has been expired!' });        
-    }
-    //find user
-    let user = await UserModel.findById(token.user)
-    if(!user) {
-        return res.status(400).json({ error : 'User associated with token not found!' });        
-    }
-    if(user.isVerified){
-        return res.status(400).json({error:" User already registered. Login to continue"})
-    }
 
-    // verify user
-    user.isVerified = true
-    user = await  user.save()
-    if(!user){
-        return res.status(400).json({error: "Failed to verify. Try again later"})
-    }
-    res.send({message:"User verified successfully"})
-    
-}
