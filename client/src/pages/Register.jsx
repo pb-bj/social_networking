@@ -7,7 +7,7 @@ const SignUp = () => {
     <div className="w-full grid place-items-center gap-3 px-6 py-12 mx-auto max-w-[1200px] md:h-screen">
 
       {/* signup container */}
-      <div className="w-full md:h-fit lg:h-fit lg:py-0 flex rounded-xl overflow-hidden shadow-2xl">
+      <div className="w-full md:h-fit lg:h-fit lg:py-0 flex rounded-xl overflow-hidden border border-gray-200">
 
 
         {/* === Content LEFT === */}
