@@ -1,12 +1,13 @@
 const { createUserPost, readUserPost, readFeedPost,  updateUserPost, deletePosts } = require('../controllers/post.controller');
+const { authMiddleware } = require('../middleware/auth.middleware');
 
 const router = require('express').Router();
 const upload = require('../utils/fileUpload');
 
-router.post('/create-post', upload.single('image'), createUserPost);
+router.post('/create-post', authMiddleware , upload.single('image'), createUserPost);
 router.get('/get-feed-post', readFeedPost);
-router.get('/get-user-post/:id', readUserPost);
-router.put('/update-post/:id', upload.single('image'), updateUserPost);
-router.delete('/delete-post/:deleteId', deletePosts);
+router.get('/get-user-post/:id', authMiddleware , readUserPost);
+router.put('/update-post/:id', authMiddleware ,upload.single('image'), updateUserPost);
+router.delete('/delete-post/:id',authMiddleware , deletePosts);
 
 module.exports = router;
