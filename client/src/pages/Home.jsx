@@ -1,11 +1,12 @@
+import Navbar from "../components/Navbar";
 
+import Feed from "../components/Feed";
 const Home = () => {
   return (
-    <div>Home
-      
-      <p>Hello</p>
-    </div>
-  )
-}
+    <>
+      <Feed/>
+    </>
+  );
+};
 
-export default Home
+export default Home;
