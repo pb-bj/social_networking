@@ -1,3 +1,4 @@
+const { ObjectId } = require('bson');
 const mongoose = require('mongoose')
 
 const userSchema = new mongoose.Schema({
@@ -29,14 +30,18 @@ const userSchema = new mongoose.Schema({
     //     type: Boolean,
     //     default: false
     // },
-    followers : {
-        type : [String],
-        default : [] 
-    },
-    followings : {
-        type : [String],
-        default : [] 
-    },
+    followers : [
+        {
+            type:ObjectId,
+            ref:'User'
+        }
+    ],
+    followings : [
+        {
+            type:ObjectId,
+            ref:'User'
+        }
+    ],
 }, { timestamps : true } );
 
 module.exports = mongoose.model("User", userSchema)
