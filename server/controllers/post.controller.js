@@ -88,5 +88,17 @@ exports.deletePosts = async (req, res) => {
         console.error(error);
     }
 };
-
-
+// exports.likePost = async (req ,res) => {
+//     PostModel.findByIdAndUpdate(req.params.id,{
+//         $push:{likes:req.user._id}
+//     },{
+//         new: true
+//     }).exec((err,result)=>{
+//         if (err){
+//             return res.status(422).json({error:err})
+//         }
+//         else{
+//             res.json(result)
+//         }
+//     })
+// }

@@ -14,10 +14,12 @@ const postSchema = new mongoose.Schema({
     image : {
         type : String,
     },
-   likes : {
-        type : Number,
-        default : 0,
-   }
+   likes : [
+    {
+        type:ObjectId,
+        ref:"User"
+    }
+   ]
   }, { timestamps : true });
 
   module.exports = mongoose.model('Post', postSchema);
