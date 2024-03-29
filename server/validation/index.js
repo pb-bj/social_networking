@@ -1,7 +1,6 @@
 const { validationResult, check } = require('express-validator');
 
 exports.registerRules = [
-  check('fullname').trim().isLength({ min: 1 }).withMessage('Full name is required.').escape(),
   check('email').isEmail().withMessage('Please provide a valid email address.'),
   check('password').isLength({ min: 6 }).withMessage('Password must be at least 6 characters long.').matches(/\d/).withMessage('Password must contain a number.'),
 ];
