@@ -20,8 +20,8 @@ exports.registerUserAccount = async (req, res) => {
         }
         
         // sign in token
-        const token = jwt.sign({ _id : user._id }, process.env.JWT_SECRET);
-
+        const token = jwt.sign({ _id : user._id }, process.env.JWT_SECRET, { expiresIn : '1h'} );
+        res.cookie('token', token, { httpOnly : true, maxAge : 360000 });
             res.header('Authorization', token).json({ user, token });
     } catch(error) {
         res.status(500).json({ message : error.message });
@@ -38,7 +38,8 @@ exports.loginUserAccount = async (req, res) => {
                 return res.status(400).json({ error : "Invalid credentials" });
             } 
 
-        const token = jwt.sign({ _id: checkUser._id }, process.env.JWT_SECRET);    
+         const token = jwt.sign({ _id : checkUser._id }, process.env.JWT_SECRET, { expiresIn : '1h'} );
+        res.cookie('token', token, { httpOnly : true, maxAge : 360000 });
         res.header('Authorization', token).json({ message : 'User login successful', token });
    } catch(error) {
         res.status(500).json({ message : error.message });
