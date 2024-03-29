@@ -2,23 +2,12 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 import AuthProvider from "./contexts/AuthContext";
 
 import Home from "./pages/Home";
-
-import Footer from "./components/Footer";
-
-import Navbar from "./components/Navbar";
-import Layout from "./Layout";
-
-
-
 import Login from "./pages/Login"
 import Register from "./pages/Register"
 import MyProfile from "./pages/MyProfile";
 import ResetPassword from "./pages/ResetPassword"
 import Profile from "./pages/Profile"
 
-
-import Footer from "./components/Footer";
-import Navbar from "./components/Navbar";
 import Layout from "./Layout"
 
 const App = () => {
@@ -35,7 +24,7 @@ const App = () => {
               {/* Profile page goes here */}
               <Route path="/" element={<Layout />} >
                 <Route index element={<Home/>}/>
-<Route path="/profile" element={<MyProfile />} />
+                  <Route path="/profile" element={<MyProfile />} />
               </Route>
 
           </Routes>
