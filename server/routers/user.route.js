@@ -10,9 +10,6 @@ const upload = require('../utils/fileUpload');
 router.get('/user-profile/:id', getUserDetails);
 router.put('/user-profile/edit/:id', authMiddleware, upload.single('image') ,updateUserDetails);
 router.delete('/user-profile/delete/:id', authMiddleware, deleteUserDetails);
-
-
-
 router.put('/follow/:id',authMiddleware,followUser)
 router.put('/unfollow/:id',authMiddleware,unfollowUser)
 
