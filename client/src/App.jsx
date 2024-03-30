@@ -1,34 +1,31 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import AuthProvider from "./contexts/AuthContext";
-
 import Home from "./pages/Home";
-import Footer from "./components/Footer";
+import Login from "./pages/Login";
+import Register from "./pages/Register";
 import MyProfile from "./pages/MyProfile";
-import Navbar from "./components/Navbar";
-import Layout from "./Layout"
-import Login from "./pages/Login"
-import Register from "./pages/Register"
-import ResetPassword from "./pages/ResetPassword"
-import Profile from "./pages/Profile"
+import ResetPassword from "./pages/ResetPassword";
+import Profile from "./pages/Profile";
+
+import Layout from "./Layout";
 
 const App = () => {
   return (
-    <BrowserRouter>
-  
-    <Routes>
-{/* register and log in here  */}
-      <Route path="/login" element={<Login/>}/>
-      <Route path="/register" element={<Register/>}/>
-      <Route path="/resetPassword" element={<ResetPassword/>}/> 
+    <AuthProvider>
+      <BrowserRouter>
+        <Routes>
+          {/* register and log in here  */}
+          <Route path="/login" element={<Login />} />
+          <Route path="/register" element={<Register />} />
+          <Route path="/resetPassword" element={<ResetPassword />} />
 
-              {/* Profile page goes here */}
-              <Route path="/" element={<Layout />} >
-                <Route index element={<Home/>}/>
-
-              </Route>
-
-          </Routes>
-        </BrowserRouter>
+          {/* Profile page goes here */}
+          <Route path="/" element={<Layout />}>
+            <Route index element={<Home />} />
+            <Route path="/profile" element={<MyProfile />} />
+          </Route>
+        </Routes>
+      </BrowserRouter>
     </AuthProvider>
   );
 };

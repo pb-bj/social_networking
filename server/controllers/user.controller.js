@@ -61,7 +61,7 @@ exports.deleteUserDetails = async (req, res) => {
 
 //follow user
 
-export const followUser = async (req,res)=>{
+exports.followUser = async (req,res)=>{
     
     const friendId = req.params.id
 
@@ -93,7 +93,7 @@ export const followUser = async (req,res)=>{
 
 // unfollow user
 
-export const unfollowUser = async (req,res)=>{
+exports.unfollowUser = async (req,res)=>{
     const friendId = req.params.id
 
     const {currentUserId} =req.user._id
