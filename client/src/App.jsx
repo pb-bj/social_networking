@@ -1,5 +1,4 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
-import AuthProvider from "./contexts/AuthContext";
 
 import Home from "./pages/Home";
 import Login from "./pages/Login"
@@ -13,7 +12,6 @@ import Layout from "./Layout"
 const App = () => {
   return (
 
-    <AuthProvider>
         <BrowserRouter>
           <Routes>
               {/* register and log in here  */}
@@ -29,7 +27,6 @@ const App = () => {
 
           </Routes>
         </BrowserRouter>
-    </AuthProvider>
 
   );
 };
