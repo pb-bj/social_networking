@@ -4,8 +4,8 @@ import Profile1 from "../assets/profile/profile1.jpg";
 const Feed = () => {
   return (
     <div>
-      <div className="feedWrapper h-auto md:h-[10000px] bg-[#f1f1f1] ">
-        <div className="feedContainer flex flex-col md:flex-row  ">
+     
+        <div className="feedContainer  bg-slate-100 flex flex-col md:flex-row  ">
           <div className="feedLeft flex flex-col items-center w-full md:w-[57%] ">
             <div className="profile  hidden md:block rounded-lg w-[300px] h-[290px]  mt-12 py-10 px-7 bg-white ">
               <div className="profileInfo w-40 flex gap-3">
@@ -454,7 +454,7 @@ const Feed = () => {
           </div>
         </div>
       </div>
-    </div>
+   
   );
 };
 

@@ -1,6 +1,44 @@
+import { useForm } from 'react-hook-form';
+import { yupResolver } from '@hookform/resolvers/yup';
+import * as yup from 'yup';
+
+import { toast } from "react-hot-toast";
+import { loginPostRequest } from '../services/api';
+import { Link, useNavigate } from 'react-router-dom'
+import { useAuth } from '../contexts/AuthContext';
+
 import formImg1 from '../assets/images/form_bg.jpg'
-import { Link } from 'react-router-dom'
+
+const validationSchema = yup.object({
+    email : yup.string().email('Invalid email').required('Email is required'),
+    password : yup.string().min(6, 'Password must be at least 6 characters').required('Password is required'),
+})
+.required();
+
 const Login = () => {
+    const { register, handleSubmit, formState : { errors } } = useForm({
+        resolver : yupResolver(validationSchema)
+    });
+    const navigate = useNavigate();
+    const { login } = useAuth(); 
+
+    
+        const onSubmit = async (data, e) => {
+            e.preventDefault();
+            try {
+                const result = await loginPostRequest(data); 
+                    if(result && result.message &&result.token) {
+                        login(result.token)
+                        toast.success(`${result.message}`);
+                        navigate('/');
+                    } else {
+                        toast.error(`${result.error}`)
+                    }
+            } catch(error) {
+                console.log(error)
+            }
+        }
+
   return (
 
     // login wrapper
@@ -21,13 +59,27 @@ const Login = () => {
         </div>
 
         {/* ==== login form starts here ==== */}
-        <form className="py-8 flex flex-col gap-6 md:w-[70%] md:ml-10">
+        <form className="py-8 flex flex-col gap-6 md:w-[70%] md:ml-10" onSubmit={ handleSubmit(onSubmit) }>
 
             <label htmlFor="email" className='text-white font-medium text-[1.3rem]'>Email</label>
-            <input type="email" className="outline-none text-sm px-4 py-3 rounded-lg" />
+            <input 
+                type="email" 
+                name="email"
+                className="outline-none text-sm px-4 py-3 rounded-lg"
+                {...register('email')}
+                autoComplete='off'
+            />
+            <p className='text-red-600 text-sm'>{errors.email?.message}</p>
 
             <label htmlFor="password" className='text-white font-medium text-[1.3rem]'>Password</label>
-            <input type="password" className="outline-none text-sm px-4 py-3 rounded-lg"/>
+            <input 
+                type="password" 
+                name="password"
+                className="outline-none text-sm px-4 py-3 rounded-lg"
+                {...register('password')}
+                autoComplete='off'
+            />
+            <p className='text-red-600 text-sm'>{errors.password?.message}</p>
 
             <button type="submit" className=" bg-blue-700 text-white rounded-md px-3 py-3 font-normal mt-4">Login</button>
 
