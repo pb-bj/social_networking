@@ -88,17 +88,26 @@ exports.deletePosts = async (req, res) => {
         console.error(error);
     }
 };
-// exports.likePost = async (req ,res) => {
-//     PostModel.findByIdAndUpdate(req.params.id,{
-//         $push:{likes:req.user._id}
-//     },{
-//         new: true
-//     }).exec((err,result)=>{
-//         if (err){
-//             return res.status(422).json({error:err})
-//         }
-//         else{
-//             res.json(result)
-//         }
-//     })
-// }
+
+
+
+// like and unlike posts
+export const likePost = async (req ,res) => {
+    const PostId = req.params.id
+    const userId = req.user._id
+
+    try{
+        const post = await PostModel.findById(PostId)
+        if(!post.likes.includes(userId)){
+            await post.updateOne({$push: {likes: userId}})
+            return res.status(200).json({message:"Post liked"})
+        }
+        else{
+            await post.updateOne({$pull: {likes: userId}})
+            return res.status(200).json({message:"Post unliked"})
+        }
+    }catch(error){
+        res.status(500).json({ message : error.message });
+        console.log(error);
+    }
+}
