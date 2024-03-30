@@ -1,11 +1,10 @@
 import React, { useState } from "react";
+import { Link } from "react-router-dom";
 import Profile1 from "../assets/profile/profile1.jpg";
 import EditProfilePanel from "./EditProfilePanel";
+import MyProfile from "../pages/MyProfile";
 
 const EditProfile = () => {
-  const [showEditProfilePanel, setEditProfilePanel] = useState(false);
-
-  const handelOnClose = () => setEditProfilePanel(false);
   return (
     <div className="profile  rounded-lg     py-10 px-7 bg-white ">
       <div className="profileinfotop flex justify-between ">
@@ -19,12 +18,9 @@ const EditProfile = () => {
             Jhon Doe <p className=" text-[12px]">2 Friends</p>
           </h6>
         </div>
-        <button
-          onClick={() => setEditProfilePanel(true)}
-          className="bg-slate-200 py-1 px-4 rounded-full"
-        >
-          Edit
-        </button>
+        <Link to="/profile">
+          <button className="bg-slate-200 py-1 px-4 rounded-full">Edit</button>
+        </Link>
       </div>
       <div className="line my-4 bg-slate-300 py-[1px] rounded-full"></div>
 
@@ -82,10 +78,6 @@ const EditProfile = () => {
           <div className="text-[12px]">12</div>
         </div>
       </div>
-      <EditProfilePanel
-        onClose={handelOnClose}
-        visible={showEditProfilePanel}
-      />
     </div>
   );
 };

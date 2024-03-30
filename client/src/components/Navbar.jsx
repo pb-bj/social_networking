@@ -1,8 +1,10 @@
 import React, { useState, useRef, useEffect } from "react";
 import Profile1 from "../assets/profile/profile1.jpg";
-import { Link } from "react-router-dom"; // Import Link from react-router-dom
+import { Link } from "react-router-dom"; 
+import { useAuth } from "../contexts/AuthContext";
 
 const Navbar = () => {
+  const { logout } = useAuth();
   const [dropdownVisible, setDropdownVisible] = useState(false);
   const dropdownRef = useRef(null);
 
@@ -15,6 +17,10 @@ const Navbar = () => {
       setDropdownVisible(false);
     }
   };
+
+  const handleLogout = () => {
+      logout()
+  }
 
   useEffect(() => {
     document.addEventListener("mousedown", handleClickOutside);
@@ -134,7 +140,7 @@ const Navbar = () => {
                       clipRule="evenodd"
                     />
                   </svg>
-                  Log out
+                  <p onClick={ handleLogout }>Log out</p>
                 </div>
               </div>
             )}
