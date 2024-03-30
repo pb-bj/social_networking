@@ -24,4 +24,14 @@ export const loginPostRequest = async (formData) => {
     } catch(error) {
             return error.response.data;
     }
+};
+
+
+export const userDetails = async (id) => {
+    try {
+        const response = await axios.get(`${API_URL}/api/user-profile/${id}`);
+            return response.data;
+    } catch(error) {
+        return error.response.data;
+    }
 }
