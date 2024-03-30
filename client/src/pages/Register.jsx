@@ -1,33 +1,45 @@
+import { useForm } from "react-hook-form"
+import { yupResolver } from "@hookform/resolvers/yup"
+import * as yup from "yup";
+
 import { Link, useNavigate } from 'react-router-dom'
-import { useState } from 'react';
-import formImg2 from '../assets/images/form_bg2.png';
 import { registerPostRequest } from '../services/api';
 
+import formImg2 from '../assets/images/form_bg2.png';
+import toast from "react-hot-toast";
+
+const validationSchema = yup.object({
+    firstName : yup.string().required('First name is required'),
+    lastName : yup.string().required('Last name is required'),
+    gender : yup.string().required('Gender is required'),
+    email : yup.string().email('Invalid email').required('Email is required'),
+    password : yup.string().min(6, 'Password must be at least 6 characters').required('Password is required'),
+    confirmPassword: yup.string()
+        .oneOf([yup.ref('password'), null], 'Passwords must match')
+        .required('Please confirm your password')
+  })
+  .required();
+
 const SignUp = () => {
-    const navigate = useNavigate()
-    const [ formData , setFormData ] = useState({
-        firstName : '',
-        lastName : '',
-        gender : '',
-        email : '',
-        password : '',
-    });
-
-    const handleChange = (e) => {
-      setFormData({...formData, [e.target.name] : e.target.value })   
-    };
-
-    const handleSubmit =  async (e) => {
+    const navigate = useNavigate();
+    const { register, handleSubmit, formState : { errors } } = useForm({
+      resolver: yupResolver(validationSchema),
+    })
+    
+    // const onSubmit = (data) => console.log(data)
+    const onSubmit = async (data, e) => {
       e.preventDefault();
       try {
-       const result =  await registerPostRequest(formData);
-        if(result) {
-          navigate('/login');
-        } 
-        console.log(result);
-      } catch(error) {
-        console.log(error);
-      }
+       const result = await registerPostRequest(data);
+           if (result && result.message) {
+              toast.success(`${result.message}`);
+              navigate('/login');
+          } else { 
+            toast.error(`${result.error}`);
+          }
+        } catch(error) {
+            toast.error('An unexpected error occurred. Please try again.');
+          }
     }
 
     return (
@@ -52,28 +64,30 @@ const SignUp = () => {
 
           {/* ==== form begins here ===== */}
 
-          <form className="py-7 grid sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-6" onSubmit={ handleSubmit }>
+          <form 
+              className="py-7 grid sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-6" 
+              onSubmit={ handleSubmit(onSubmit)}>
 
               <div className="w-full">
                 <label htmlFor="firstName" className="text-black font-medium text-[1.3rem]">First Name</label>
                 <input 
                     type="text" 
-                    name="firstName"
-                    value={formData.firstName}
-                    onChange={ handleChange }  
                     className="bg-slate-100 border border-gray-300  text-sm px-4 py-3 rounded-lg text-black outline-none w-full mt-3" 
+                    {...register('firstName')}
+                    autoComplete='off'
                 />
+                <p className='text-red-600 text-sm'>{errors.firstName?.message}</p>
               </div>
 
               <div className="w-full">
                 <label htmlFor="lastName" className="text-black font-medium text-[1.3rem]">Last Name</label>
                 <input 
                     type="text" 
-                    name="lastName" 
                     className="bg-slate-100 border border-gray-300 text-sm px-4 py-3 rounded-lg text-black outline-none w-full mt-3" 
-                    value={formData.lastName}
-                    onChange={ handleChange }
+                    {...register('lastName')}                
+                    autoComplete='off'
                 />
+                <p className='text-red-600 text-sm'>{errors.lastName?.message}</p>
               </div>
 
               <div className="w-full">
@@ -82,39 +96,22 @@ const SignUp = () => {
                     type="text" 
                     name="gender" 
                     className="bg-slate-100 border border-gray-300 text-sm px-4 py-3 rounded-lg text-black outline-none w-full mt-3" 
-                    value={formData.gender}
-                    onChange={ handleChange }
+                    {...register('gender')}
+                    autoComplete='off'
                 />
+                <p className='text-red-600 text-sm'>{errors.gender?.message}</p>
               </div>
-
-              {/* <div className="w-full">
-                  <label htmlFor="gender" className="text-black font-medium text-[1.3rem] mt-3">Gender</label>
-                  <div className="relative mt-3">
-                    <select id="gender" className="block appearance-none w-full bg-slate-100 border border-gray-300 text-black py-3 px-4 pr-8 rounded-lg leading-tight focus:outline-none focus:bg-white focus:border-gray-500">
-                    <option value="" disabled selected>Select</option>
-                      <option value="male">Male</option>
-                      <option value="female">Female</option>
-                      <option value="other">Other</option>
-                    </select> 
-
-                     <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
-                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="w-3 h-6 me-2">
-                    <path fillRule="evenodd" d="M12.53 16.28a.75.75 0 0 1-1.06 0l-7.5-7.5a.75.75 0 0 1 1.06-1.06L12 14.69l6.97-6.97a.75.75 0 1 1 1.06 1.06l-7.5 7.5Z" clipRule="evenodd" />
-                  </svg>
-
-                    </div>
-                  </div>
-              </div> */}
-
 
               <div className="w-full">
                 <label htmlFor="email" className="text-black font-medium text-[1.3rem]">Email</label>
                     <input 
                       type="email" 
                       name="email"
-                      value={formData.email}
-                      onChange={ handleChange }
-                      className="bg-slate-100 border border-gray-300 text-sm px-4 py-3 rounded-lg text-black outline-none w-full mt-3" />
+                      className="bg-slate-100 border border-gray-300 text-sm px-4 py-3 rounded-lg text-black outline-none w-full mt-3" 
+                      {...register('email')}
+                      autoComplete='off'
+                    />
+                    <p className='text-red-600 text-sm'>{errors.email?.message}</p>
               </div>
             
             <div className="w-full">
@@ -122,22 +119,27 @@ const SignUp = () => {
                 <input 
                     type="password" 
                     name="password" 
-                    value={formData.password}
-                    onChange={ handleChange }
-                    className="bg-slate-100 border border-gray-300 text-sm px-4 py-3 rounded-lg text-black outline-none w-full mt-3" />
+                    className="bg-slate-100 border border-gray-300 text-sm px-4 py-3 rounded-lg text-black outline-none w-full mt-3" 
+                    autoComplete='off'
+                    {...register('password')}
+                />
+                <p className='text-red-600 text-sm'>{errors.password?.message}</p>
             </div>
 
               <div className="w-full">
                 <label htmlFor="confirmPassword" className="text-black font-medium text-[1.3rem]">Confirm Password</label>
-                <input type="password" id="confirmPassword" className="bg-slate-100 border border-gray-300 text-sm px-4 py-3 rounded-lg text-black outline-none w-full mt-3" />
+                <input 
+                    type="password" 
+                    autoComplete='off' 
+                    name="confirmPassword" 
+                    className="bg-slate-100 border border-gray-300 text-sm px-4 py-3 rounded-lg text-black outline-none w-full mt-3" 
+                    {...register('confirmPassword')}
+                />
+                <p className='text-red-600 text-sm'>{errors.confirmPassword?.message}</p>
               </div>
-
-
 
             <button type="" className=" border-[0.5px] border-blue-700 text-blue-800 rounded-md px-3 py-3 font-semibold mt-4">Cancel</button>
             <button type="submit" className=" bg-blue-700 text-white rounded-md px-3 py-3 font-semibold mt-4">Confirm</button>
-
-          
           </form>
 
             <p className="text-black text-sm mt-auto font-semibold my-6">Already have an account? 
