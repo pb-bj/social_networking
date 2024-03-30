@@ -1,10 +1,12 @@
 import React, { useState, useRef, useEffect } from "react";
-import Profile1 from "../assets/profile/profile1.jpg";
 import { Link } from "react-router-dom"; 
 import { useAuth } from "../contexts/AuthContext";
+import { useUserDetails  } from "../contexts/UserContext";
 
 const Navbar = () => {
+  const { usersInfo } = useUserDetails();
   const { logout } = useAuth();
+
   const [dropdownVisible, setDropdownVisible] = useState(false);
   const dropdownRef = useRef(null);
 
@@ -18,15 +20,13 @@ const Navbar = () => {
     }
   };
 
-  const handleLogout = () => {
-      logout()
-  }
+  const handleLogout = () => logout();
 
   useEffect(() => {
-    document.addEventListener("mousedown", handleClickOutside);
-    return () => {
-      document.removeEventListener("mousedown", handleClickOutside);
-    };
+      document.addEventListener("mousedown", handleClickOutside);
+      return () => {
+        document.removeEventListener("mousedown", handleClickOutside);
+      };
   }, []);
 
   const handleDropdownOptionClick = () => {
@@ -67,10 +67,10 @@ const Navbar = () => {
           <div className="profile flex items-center gap-2 rounded-full md:bg-sky-400 text-white px-3 py-2 hover:cursor-pointer">
             <img
               className="h-6 w-6 object-cover rounded-full bg-emerald-700"
-              src={Profile1}
+              src={usersInfo?.user?.image}
               alt=""
             />
-            <p className="md:block hidden">bishant</p>
+            <p className="md:block hidden">{usersInfo?.user?.firstName}</p>
             <svg
               xmlns="http://www.w3.org/2000/svg"
               viewBox="0 0 20 20"
