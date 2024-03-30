@@ -1,5 +1,4 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
-import AuthProvider from "./contexts/AuthContext";
 
 import Home from "./pages/Home";
 import Login from "./pages/Login"
@@ -8,13 +7,11 @@ import MyProfile from "./pages/MyProfile";
 import ResetPassword from "./pages/ResetPassword"
 import Profile from "./pages/Profile"
 
-import Footer from "./components/Footer";
-import Navbar from "./components/Navbar";
 import Layout from "./Layout"
 
 const App = () => {
   return (
-    <AuthProvider>
+
         <BrowserRouter>
           <Routes>
               {/* register and log in here  */}
@@ -25,12 +22,12 @@ const App = () => {
               {/* Profile page goes here */}
               <Route path="/" element={<Layout />} >
                 <Route index element={<Home/>}/>
-
+                  <Route path="/profile" element={<MyProfile />} />
               </Route>
 
           </Routes>
         </BrowserRouter>
-    </AuthProvider>
+
   );
 };
 
