@@ -92,7 +92,7 @@ exports.deletePosts = async (req, res) => {
 
 
 // like and unlike posts
-export const likePost = async (req ,res) => {
+exports.likePost = async (req ,res) => {
     const PostId = req.params.id
     const userId = req.user._id
 
