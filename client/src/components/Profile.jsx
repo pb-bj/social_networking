@@ -3,11 +3,12 @@ import nopostImg from "../assets/images/nopost.png";
 import EditProfilePanel from "./EditProfilePanel";
 import { useState, useEffect } from "react";
 import PostEdit from "./PostEdit";
-import { useAuth } from '../contexts/AuthContext';
-import { toast } from 'react-hot-toast'
-import { deletePostRequest } from '../services/postApi'
+import { useAuth } from "../contexts/AuthContext";
+import { toast } from "react-hot-toast";
+import { deletePostRequest } from "../services/postApi";
 
 const Profile = ({ posts }) => {
+  console.log(posts);
   const { usersInfo } = useUserDetails();
   const [showEdit, setShowEdit] = useState(false);
   const [showEditPost, setShowEditPost] = useState(false);
@@ -28,13 +29,13 @@ const Profile = ({ posts }) => {
     try {
       const result = await deletePostRequest(postId, token);
       if (result) {
-        setUserPost(userPost.filter(post => post._id !== postId))
-        toast.success('Post Deleted');
+        setUserPost(userPost.filter((post) => post._id !== postId));
+        toast.success("Post Deleted");
       } else {
-        toast.error('Failed to delete');
+        toast.error("Failed to delete");
       }
     } catch (error) {
-      console.error('Error deleting post:', error);
+      console.error("Error deleting post:", error);
     }
   };
 
@@ -169,7 +170,13 @@ const Profile = ({ posts }) => {
       {orderPosts.length > 0 ? (
         orderPosts.map((post) => (
           <div key={post._id}>
-            {showEditPost && <PostEdit setShowEditPost={setShowEditPost} posts={posts} postId={post._id} />}
+            {showEditPost && (
+              <PostEdit
+                setShowEditPost={setShowEditPost}
+                posts={posts}
+                postId={post._id}
+              />
+            )}
             <div className="posts mt-5 flex flex-col   py-10 px-7 bg-white">
               <div className="posttop flex justify-between items-center">
                 <div className="posttopin flex gap-4">
@@ -191,7 +198,10 @@ const Profile = ({ posts }) => {
                   </div>
                 </div>
                 <div className="right flex gap-2">
-                  <div className="Options items-center py-2 px-2 bg-slate-200 hover:cursor-pointer hover:bg-red-200 rounded-full" onClick={() => handleDeletePost(post._id)}>
+                  <div
+                    className="Options items-center py-2 px-2 bg-slate-200 hover:cursor-pointer hover:bg-red-200 rounded-full"
+                    onClick={() => handleDeletePost(post._id)}
+                  >
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
                       fill="none"
@@ -279,7 +289,7 @@ const Profile = ({ posts }) => {
           </div>
         ))
       ) : (
-        <img className="bg-white mt-3 px-32 py-10 " src={nopostImg} />
+        <img className="bg-white mt-3 px-52 py-10  " src={nopostImg} />
       )}
       {showEdit && <EditProfilePanel setShowEditProfile={setShowEdit} />}
     </div>

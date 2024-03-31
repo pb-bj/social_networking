@@ -4,9 +4,15 @@ import nopost from "../assets/images/nopost.png";
 
 const Post = ({ posts }) => {
   const orderPosts = posts.slice().sort((a, b) => {
+  if (!Array.isArray(posts)) {
+    return null;
+  } 
+  const orderPosts = posts?.slice().sort((a, b) => {
     const postA = new Date(a.createdAt);
     const postB = new Date(b.createdAt);
     return postB - postA;
+
+    
   });
   console.log(orderPosts)
 
