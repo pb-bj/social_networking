@@ -7,7 +7,7 @@ const UserContext = createContext();
 const UserProvider = ({ children }) => {
     const { token } = useAuth();
     const [usersInfo, setUsersInfo] = useState([]);
-    console.log(usersInfo)
+    // console.log(usersInfo)
     const getUserInfo = async () => {
         try {
             if (token) {
