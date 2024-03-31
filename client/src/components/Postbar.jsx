@@ -1,8 +1,10 @@
 import React, { useState } from "react";
-import Profile1 from "../assets/profile/profile1.jpg";
+// import Profile1 from "../assets/profile/profile1.jpg";
 import PostPanel from "./PostPanel";
+import { useUserDetails } from "../contexts/UserContext";
 
 const Postbar = () => {
+  const { usersInfo } = useUserDetails();
   const [showPostPanel, setShowPostPanel] = useState(false);
 
   const handelOnClose = () => setShowPostPanel(false);
@@ -12,7 +14,7 @@ const Postbar = () => {
       <div className="sharetop flex items-center mb-4 gap-5">
         <img
           className=" object-cover rounded-full w-10 h-10"
-          src={Profile1}
+          src={usersInfo?.user.image}
           alt=""
         />
 
