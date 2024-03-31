@@ -3,15 +3,20 @@ import PostEdit from "./PostEdit";
 import nopost from "../assets/images/nopost.png";
 
 const Post = ({ posts }) => {
+  if (!Array.isArray(posts)) {
+    return null;
+  } 
   const orderPosts = posts?.slice().sort((a, b) => {
     const postA = new Date(a.createdAt);
     const postB = new Date(b.createdAt);
     return postB - postA;
+
+    
   });
 
   return (
     <>
-      {orderPosts && orderPosts.length >= 0 ? (
+      {orderPosts && orderPosts.length > 0 ? (
         orderPosts.map((post) => (
           <div key={post._id}>
             <div className="posts mt-5 flex flex-col py-10 px-7 bg-white">
