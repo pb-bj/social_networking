@@ -10,7 +10,8 @@ const EditProfile = () => {
         <div className="profileInfo flex gap-3">
           <img
             className=" object-cover rounded-full w-10 h-10"
-            src={usersInfo?.user?.image || 'https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png'}
+            // src={usersInfo?.user?.image || 'https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png'}
+            src={usersInfo?.user?.image ? `${import.meta.env.VITE_BASE_URL}/${usersInfo?.user?.image}` : 'https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png'}
             alt=""
           />
           <h6 className="">

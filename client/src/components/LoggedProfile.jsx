@@ -19,7 +19,6 @@ const LoggedProfile = () => {
           const decodedToken = jwtDecode(token);
           const id = decodedToken._id;
           const result = await getUserPostsRequest(id);
-          console.log(result);
           setUserPosts(result);
         }
       } catch (error) {
@@ -33,17 +32,17 @@ const LoggedProfile = () => {
     <div>
       <div className="feedContainer w-full bg-slate-100 px-8 grid gird-cols-0 md:grid-cols-1 md:gap-3   ">
         <div className="feedLeft mt-6 ">
-        
+
 
 
         </div>
         <div className="feedCenter mt-1 md:col-span-2">
           <Profile visible posts={userPosts} />
 
-          
+
         </div>
       </div>
-     
+
     </div>
   );
 };
