@@ -5,7 +5,7 @@ const Post = ({ posts }) => {
   const [showPostEdit, setShowPostEdit] = useState(false);
 
   const handelOnClose = () => setShowPostEdit(false);
-  const orderPosts = posts.slice().sort((a, b) => {
+  const orderPosts = posts?.slice().sort((a, b) => {
     const postA = new Date(a.createdAt);
     const postB = new Date(b.createdAt);
     return postB - postA;
