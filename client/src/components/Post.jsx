@@ -5,9 +5,15 @@ const Post = ({ posts }) => {
   const [showPostEdit, setShowPostEdit] = useState(false);
 
   const handelOnClose = () => setShowPostEdit(false);
+  const orderPosts = posts.slice().sort((a, b) => {
+    const postA = new Date(a.createdAt);
+    const postB = new Date(b.createdAt);
+    return postB - postA;
+  });
+
   return (
     <>
-      {posts && posts.length >= 0 ? posts.map((post) => (
+      {orderPosts && orderPosts.length >= 0 ? orderPosts.map((post) => (
         <div key={post._id}>
           <div className="posts mt-5 flex flex-col py-10 px-7 bg-white">
             <div className="posttop flex justify-between items-center">
