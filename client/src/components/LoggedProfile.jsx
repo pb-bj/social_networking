@@ -1,12 +1,13 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState } from "react";
 import EditProfilePanel from "./EditProfilePanel";
-import { getUserPostsRequest } from '../services/postApi';
-import { useAuth } from '../contexts/AuthContext';
-import { jwtDecode } from 'jwt-decode';
+import { getUserPostsRequest } from "../services/postApi";
+import { useAuth } from "../contexts/AuthContext";
+import { jwtDecode } from "jwt-decode";
+import Profile from "./Profile";
 
 const LoggedProfile = () => {
   const { token } = useAuth();
-  const [userPosts, setUserPosts] = useState([])
+  const [userPosts, setUserPosts] = useState([]);
 
   useEffect(() => {
     const fetchUserposts = async () => {
@@ -24,7 +25,7 @@ const LoggedProfile = () => {
     };
 
     fetchUserposts();
-  }, [])
+  }, []);
   return (
     <div>
       <div className="feedContainer w-full bg-slate-100 px-8 grid gird-cols-0 md:grid-cols-3 md:gap-3   ">
@@ -32,7 +33,7 @@ const LoggedProfile = () => {
           <EditProfilePanel />
         </div>
         <div className="feedCenter mt-1 md:col-span-2">
-
+          <Profile />
         </div>
       </div>
     </div>
