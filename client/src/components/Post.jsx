@@ -1,6 +1,4 @@
-
 import React, { useState } from "react";
-import Profile1 from "../assets/profile/profile1.jpg";
 import PostEdit from "./PostEdit";
 
 const Post = ({ posts }) => {
@@ -9,7 +7,7 @@ const Post = ({ posts }) => {
   const handelOnClose = () => setShowPostEdit(false);
   return (
     <>
-      {posts.map((post) => (
+      {posts?.map((post) => (
         <div key={post._id}>
           <div className="posts mt-5 flex flex-col py-10 px-7 bg-white">
             <div className="posttop flex justify-between items-center">
