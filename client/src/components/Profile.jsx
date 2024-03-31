@@ -1,7 +1,7 @@
 import { useUserDetails } from "../contexts/UserContext";
 import nopostImg from "../assets/images/nopost.png";
 import EditProfilePanel from "./EditProfilePanel";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import PostEdit from "./PostEdit";
 import { useAuth } from '../contexts/AuthContext';
 import { toast } from 'react-hot-toast'
@@ -13,8 +13,13 @@ const Profile = ({ posts }) => {
   const [showEdit, setShowEdit] = useState(false);
   const [showEditPost, setShowEditPost] = useState(false);
   const { token } = useAuth();
+  const [userPost, setUserPost] = useState(posts);
 
-  const orderPosts = posts.slice().sort((a, b) => {
+  useEffect(() => {
+    setUserPost(posts);
+  }, [posts]);
+
+  const orderPosts = userPost.slice().sort((a, b) => {
     const postA = new Date(a.createdAt);
     const postB = new Date(b.createdAt);
     return postB - postA;
@@ -22,8 +27,9 @@ const Profile = ({ posts }) => {
 
   const handleDeletePost = async (postId) => {
     try {
-      const response = await deletePostRequest(postId, token);
-      if (response) {
+      const result = await deletePostRequest(postId, token);
+      if (result) {
+        setUserPost(userPost.filter(post => post._id !== postId))
         toast.success('Post Deleted');
       } else {
         toast.error('Failed to delete');
@@ -156,7 +162,7 @@ const Profile = ({ posts }) => {
       )}
 
       {/* lower profile */}
-      {orderPosts ? (
+      {orderPosts.length > 0 ? (
         orderPosts.map((post) => (
           <div key={post._id}>
             {showEditPost && <PostEdit setShowEditPost={setShowEditPost} posts={posts} postId={post._id} />}
