@@ -4,25 +4,25 @@ import { API_URL } from '../config';
 export const registerPostRequest = async (formData) => {
     try {
         const response = await axios.post(`${API_URL}/auth/register`, formData);
-            if(response.data.message) {
-                return response.data;
-            } else {
-                return response.data;
-            }   
+        if (response.data.message) {
+            return response.data;
+        } else {
+            return response.data;
+        }
 
-    } catch(error) {
+    } catch (error) {
         return error.response.data;
     }
 };
 
 export const loginPostRequest = async (formData) => {
-    axios.defaults.withCredentials = true;
+    // axios.defaults.withCredentials = true;
     try {
         const response = await axios.post(`${API_URL}/auth/login`, formData);
-            return response.data;
+        return response.data;
 
-    } catch(error) {
-            return error.response.data;
+    } catch (error) {
+        return error.response.data;
     }
 };
 
@@ -30,8 +30,8 @@ export const loginPostRequest = async (formData) => {
 export const userDetails = async (id) => {
     try {
         const response = await axios.get(`${API_URL}/api/user-profile/${id}`);
-            return response.data;
-    } catch(error) {
+        return response.data;
+    } catch (error) {
         return error.response.data;
     }
 }

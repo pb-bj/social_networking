@@ -1,14 +1,17 @@
 import axios from 'axios';
 import { API_URL } from '../config';
 
-export const createPostRequest = async(formData, token)=>{
+export const createPostRequest = async(formData)=>{
     try{
-        const response = await axios.post(`${API_URL}/api/create-post`,formData,{
+        const token = localStorage.getItem('token');
+        console.log(token)
+        const response = await axios.post(`${API_URL}/api/create-post`, formData, {
             headers:{
-                Authorization: `Bearer ${token}`
+               'Content-Type': 'multipart/form-data',
+                Authorization: `${token}`,
             }
         });
-        return response.data;
+        console.log(response.data)
     }catch(error){
         return error.response.data;
     }
@@ -24,11 +27,11 @@ export const getFeedPostsRequest = async()=>{
     }
 };
 
-export const getUserPostsRequest = async(userId,token)=>{
+export const getUserPostsRequest = async(userId )=>{
     try{
         const response = await axios.get(`${API_URL}/api/get-user-post/${userId}`,{
             headers:{
-                Authorization: `Bearer ${token}`
+                Authorization: `Bearer ${localStorage.getItem('token')}`
             }
         });
         return response.data;
