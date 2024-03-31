@@ -3,17 +3,35 @@ import nopostImg from "../assets/images/nopost.png";
 import EditProfilePanel from "./EditProfilePanel";
 import { useState } from "react";
 import PostEdit from "./PostEdit";
+import { useAuth } from '../contexts/AuthContext';
+import { toast } from 'react-hot-toast'
+import { deletePostRequest } from '../services/postApi'
 
 const Profile = ({ posts }) => {
+  console.log(posts)
   const { usersInfo } = useUserDetails();
   const [showEdit, setShowEdit] = useState(false);
   const [showEditPost, setShowEditPost] = useState(false);
+  const { token } = useAuth();
 
   const orderPosts = posts.slice().sort((a, b) => {
     const postA = new Date(a.createdAt);
     const postB = new Date(b.createdAt);
     return postB - postA;
   });
+
+  const handleDeletePost = async (postId) => {
+    try {
+      const response = await deletePostRequest(postId, token);
+      if (response) {
+        toast.success('Post Deleted');
+      } else {
+        toast.error('Failed to delete');
+      }
+    } catch (error) {
+      console.error('Error deleting post:', error);
+    }
+  };
 
   return (
     <div className="md:w-[65%] m-auto ">
@@ -141,6 +159,7 @@ const Profile = ({ posts }) => {
       {orderPosts ? (
         orderPosts.map((post) => (
           <div key={post._id}>
+            {showEditPost && <PostEdit setShowEditPost={setShowEditPost} posts={posts} postId={post._id} />}
             <div className="posts mt-5 flex flex-col   py-10 px-7 bg-white">
               <div className="posttop flex justify-between items-center">
                 <div className="posttopin flex gap-4">
@@ -154,11 +173,11 @@ const Profile = ({ posts }) => {
                     <span className="font-bold">
                       {post?.userId?.firstName} {post.userId.lastName}
                     </span>{" "}
-                    <p className="text-[9.5px]">Graphic Designer</p>
+                    <p className="text-[14px]">{post.userId.work}</p>
                   </div>
                 </div>
                 <div className="right flex gap-2">
-                  <div className="Options items-center py-2 px-2 bg-slate-200 hover:cursor-pointer hover:bg-red-200 rounded-full">
+                  <div className="Options items-center py-2 px-2 bg-slate-200 hover:cursor-pointer hover:bg-red-200 rounded-full" onClick={() => handleDeletePost(post._id)}>
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
                       fill="none"

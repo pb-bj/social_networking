@@ -39,6 +39,7 @@ export const getUserPostsRequest = async (userId) => {
 
 export const updatePostRequest = async (postId, formData, token) => {
     try {
+        console.log(postId, formData, token)
         const response = await axios.put(`${API_URL}/api/update-post/${postId}`, formData, {
             headers: {
                 Authorization: `Bearer ${token}`

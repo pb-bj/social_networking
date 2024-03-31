@@ -28,7 +28,7 @@ const Post = ({ posts }) => {
                     <span className="font-bold">
                       {post.userId.firstName} {post.userId.lastName}
                     </span>{" "}
-                    <p className="text-[9.5px]">{post.userId.work}</p>
+                    <p className="text-[14px]">{post.userId.work}</p>
                   </div>
                 </div>
                 <div className="right flex gap-2">

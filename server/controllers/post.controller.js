@@ -53,7 +53,7 @@ exports.updateUserPost = async (req, res) => {
             _id: postId, userId
         },
             { $set: { content }, new: true }
-        );
+        ).populate('userId').exec();;
 
         if (!post) {
             return res.status(404).json({ error: 'Post not found' });
@@ -83,7 +83,7 @@ exports.deletePosts = async (req, res) => {
 
         res.status(200).json({ message: 'Post deleted successfully' });
     } catch (error) {
-        res.status(500).json({ message: error.message });
+        res.status(500).json({ error: error.message });
         console.error(error);
     }
 };
