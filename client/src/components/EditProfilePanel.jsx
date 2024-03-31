@@ -1,26 +1,26 @@
-import { useState, useEffect } from 'react';
-import { updateUserDetails } from '../services/api';
+import { useState, useEffect } from "react";
+import { updateUserDetails } from "../services/api";
 import { useAuth } from "../contexts/AuthContext";
 import { toast } from "react-hot-toast";
 import { useUserDetails } from "../contexts/UserContext";
-import { jwtDecode } from 'jwt-decode';
+import { jwtDecode } from "jwt-decode";
 
 const EditProfilePanel = ({ setShowEditProfile }) => {
   const { token } = useAuth();
   const { usersInfo } = useUserDetails();
   const [userData, setUserData] = useState({
-    firstName: '',
-    lastName: '',
-    email: '',
-    gender: '',
-    address: '',
-    work: '',
-    image: null
+    firstName: "",
+    lastName: "",
+    email: "",
+    gender: "",
+    address: "",
+    work: "",
+    image: null,
   });
 
   useEffect(() => {
     // Set user details in state when usersInfo changes
-    if (usersInfo) {
+    if (usersInfo && usersInfo.user) {
       setUserData({
         firstName: usersInfo.user.firstName,
         lastName: usersInfo.user.lastName,
@@ -28,16 +28,15 @@ const EditProfilePanel = ({ setShowEditProfile }) => {
         gender: usersInfo.user.gender,
         address: usersInfo.user.address,
         work: usersInfo.user.work,
-        image: usersInfo.user.image
+        image: usersInfo.user.image,
       });
     }
   }, [usersInfo]);
 
-
   const handleChange = (e) => {
-    setUserData(prev => ({
+    setUserData((prev) => ({
       ...prev,
-      [e.target.name]: e.target.value
+      [e.target.name]: e.target.value,
     }));
   };
 
@@ -45,42 +44,12 @@ const EditProfilePanel = ({ setShowEditProfile }) => {
     const selectedImage = e.target.files[0];
     const fileName = selectedImage.name;
 
-    setUserData(prev => ({
+    setUserData((prev) => ({
       ...prev,
-      image: selectedImage
+      image: selectedImage,
     }));
     document.getElementById("fileName").textContent = fileName;
   };
-
-
-
-  // const handleSubmit = async (e) => {
-  //   e.preventDefault();
-  //   try {
-  //     const formData = new FormData();
-  //     formData.append("firstName", userData.firstName);
-  //     formData.append("lastName", userData.lastName);
-  //     formData.append("email", userData.email);
-  //     formData.append("gender", userData.gender);
-  //     formData.append("address", userData.address);
-  //     formData.append("work", userData.work);
-  //     formData.append("image", userData.image);
-
-  //     const decodedToken = jwtDecode(token);
-  //     const id = decodedToken._id;
-
-  //     if (id && formData && token) {
-  //       await updateUserDetails(id, formData, token);
-  //       setShowEditProfile(false)
-  //       toast.success("Post updated");
-  //     } else {
-  //       toast.error("Failed to update post");
-  //     }
-  //   } catch (error) {
-  //     console.error("failed", error);
-  //   }
-  // };
-
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -111,7 +80,7 @@ const EditProfilePanel = ({ setShowEditProfile }) => {
         const id = decodedToken._id;
 
         if (id && formData && token) {
-          console.log(userData)
+          console.log(userData);
           await updateUserDetails(id, formData, token);
           setShowEditProfile(false);
           toast.success("Profile updated");
@@ -128,7 +97,7 @@ const EditProfilePanel = ({ setShowEditProfile }) => {
   };
 
   return (
-    <div  >
+    <div>
       <div className="fixed inset-0 bg-slate-500 bg-opacity-25 backdrop-blur-sm flex justify-center items-center  px-7 py-10 ">
         <div className="image rounded-md bg-white px-5 py-7 flex flex-col items-center ">
           <div className="  bg-sky-50 w-[359px] py-4   rounded-md flex flex-col  items-center">
@@ -194,7 +163,9 @@ const EditProfilePanel = ({ setShowEditProfile }) => {
                 className="   focus:ring-2 focus:bg-white focus:outline-none foucs:ring-sky-200 w-44 bg-slate-200 py-1 px-2 rounded-sm "
               />
               <input
-                name="work" value={userData.work} onChange={handleChange}
+                name="work"
+                value={userData.work}
+                onChange={handleChange}
                 placeholder="Working as"
                 type="text"
                 className="  focus:ring-2 focus:bg-white focus:outline-none foucs:ring-sky-200  w-44 bg-slate-200 py-1 px-2 rounded-sm "
@@ -203,7 +174,10 @@ const EditProfilePanel = ({ setShowEditProfile }) => {
 
             <div className="buttons grid sm:gird-cols-1 md:grid-cols-2 gap-2">
               {" "}
-              <button type='submit' className="bg-sky-400 text-white rounded-sm px-9 py-2">
+              <button
+                type="submit"
+                className="bg-sky-400 text-white rounded-sm px-9 py-2"
+              >
                 Save Changes
               </button>
               <button
