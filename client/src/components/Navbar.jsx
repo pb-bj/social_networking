@@ -37,13 +37,13 @@ const Navbar = () => {
   return (
     <div className="Wrapper  bg-opacity-[95%] backdrop-blur-[2px] sticky top-0 shadow-[0px_1px_10px_0px_#00000024] flex justify-between bg-white px-7 py-5 md:py-4">
       <div className="left flex items-center gap-3 ">
-        <p className="text-lg font-bold text-sky-500">Socio</p>
+        <p className="text-lg font-bold text-sky-500">Social Network.</p>
         <div className="searchbar">
-          <input
+          {/* <input
             className="h-5 bg-slate-200 rounded-full py-4 pl-3 pr-3 placeholder:text-gray-400 focus:outline-none focus:ring-1 focus:ring-gray-400"
             placeholder="Search.."
             type="text"
-          />
+          /> */}
         </div>
       </div>
       <div className="center"></div>
