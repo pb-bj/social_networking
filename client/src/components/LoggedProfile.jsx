@@ -1,7 +1,6 @@
 import { useEffect, useState } from 'react';
 import EditProfilePanel from "./EditProfilePanel";
 
-import Post from "./Post";
 import Profile from "./Profile";
 
 
@@ -37,12 +36,11 @@ const LoggedProfile = () => {
         <div className="feedLeft mt-6 ">
           <EditProfilePanel />
 
-       
+
         </div>
         <div className="feedCenter mt-1 md:col-span-2">
-          <Profile/>
-          {/* <Post /> */}
-        
+          <Profile posts={userPosts} />
+
 
         </div>
       </div>

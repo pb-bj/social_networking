@@ -4,24 +4,24 @@ import { useAuth } from "./AuthContext";
 import { jwtDecode } from "jwt-decode";
 const UserContext = createContext();
 
-const UserProvider = ( {children} ) => {
+const UserProvider = ({ children }) => {
     const { token } = useAuth();
-    const [ usersInfo, setUsersInfo ] = useState([]);
-
+    const [usersInfo, setUsersInfo] = useState([]);
+    console.log(usersInfo)
     const getUserInfo = async () => {
         try {
-            if(token) {
+            if (token) {
                 const decodedToken = jwtDecode(token);
-                 const id = decodedToken._id;
-                        
-                 const detail = await userDetails(id);
-                    if(detail) {
-                        setUsersInfo(detail)
-                    } else {
-                        console.log('error')
-                    }
-            }    
-        } catch(error) {
+                const id = decodedToken._id;
+
+                const detail = await userDetails(id);
+                if (detail) {
+                    setUsersInfo(detail)
+                } else {
+                    console.log('error')
+                }
+            }
+        } catch (error) {
             console.log(error);
         }
     }
