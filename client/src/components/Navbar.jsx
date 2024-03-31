@@ -1,7 +1,8 @@
 import React, { useState, useRef, useEffect } from "react";
-import { Link } from "react-router-dom"; 
+import { Link } from "react-router-dom";
 import { useAuth } from "../contexts/AuthContext";
-import { useUserDetails  } from "../contexts/UserContext";
+import { useUserDetails } from "../contexts/UserContext";
+import Home from "../pages/Home";
 
 const Navbar = () => {
   const { usersInfo } = useUserDetails();
@@ -23,10 +24,10 @@ const Navbar = () => {
   const handleLogout = () => logout();
 
   useEffect(() => {
-      document.addEventListener("mousedown", handleClickOutside);
-      return () => {
-        document.removeEventListener("mousedown", handleClickOutside);
-      };
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
   }, []);
 
   const handleDropdownOptionClick = () => {
@@ -60,7 +61,9 @@ const Navbar = () => {
               clipRule="evenodd"
             />
           </svg>{" "}
-          <div className="me-5 md:block hidden font-medium">Home</div>
+          <Link to="/" className="me-5 md:block hidden font-medium">
+            Home
+          </Link>
         </div>
 
         <div className="relative" onClick={toggleDropdown} ref={dropdownRef}>
@@ -140,7 +143,7 @@ const Navbar = () => {
                       clipRule="evenodd"
                     />
                   </svg>
-                  <p onClick={ handleLogout }>Log out</p>
+                  <p onClick={handleLogout}>Log out</p>
                 </div>
               </div>
             )}

@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import Profile1 from "../assets/profile/profile1.jpg";
-import EditProfilePanel from "./EditProfilePanel";
 import MyProfile from "../pages/MyProfile";
 
 const EditProfile = () => {
