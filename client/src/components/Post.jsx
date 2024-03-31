@@ -22,7 +22,9 @@ const Post = ({ posts }) => {
                 <div className="posttopin flex gap-4">
                   <img
                     className=" object-cover rounded-full w-10 h-10"
-                    src={post.userId.image}
+                    // src={post.userId.image}
+                    // src={usersInfo?.user?.image ? `${import.meta.env.VITE_BASE_URL}/${usersInfo?.user?.image}` : 'https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png'}
+                    src={post.userId.image ? `${import.meta.env.VITE_BASE_URL}/${post.userId.image}` : 'https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png'}
                     alt=""
                   />
                   <div className=" text-bold">
