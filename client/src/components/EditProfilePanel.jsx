@@ -54,7 +54,6 @@ const EditProfilePanel = ({ setShowEditProfile }) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      // Ensure all fields have values before proceeding
       if (
         userData.firstName &&
         userData.lastName &&

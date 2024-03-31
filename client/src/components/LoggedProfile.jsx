@@ -37,7 +37,7 @@ const LoggedProfile = () => {
 
         </div>
         <div className="feedCenter mt-1 md:col-span-2">
-          <Profile visible posts={userPosts} />
+          <Profile posts={userPosts} />
 
 
         </div>
