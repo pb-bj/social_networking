@@ -1,23 +1,24 @@
 import React, { useState } from "react";
-import Profile1 from "../assets/profile/profile1.jpg";
+// import Profile1 from "../assets/profile/profile1.jpg";
 import PostPanel from "./PostPanel";
+import { useUserDetails } from "../contexts/UserContext";
 
 const Postbar = () => {
+  const { usersInfo } = useUserDetails();
   const [showPostPanel, setShowPostPanel] = useState(false);
 
-  const handelOnClose = () => setShowPostPanel(false);
+  // const handelOnClose = () => setShowPostPanel(true);
 
   return (
     <div className="shareWrapper   flex flex-col bg-white px-8 py-8     rounded-md ">
       <div className="sharetop flex items-center mb-4 gap-5">
         <img
           className=" object-cover rounded-full w-10 h-10"
-          src={Profile1}
+          src={usersInfo?.user?.image}
           alt=""
         />
 
-        <button
-          onClick={() => setShowPostPanel(true)}
+        <button onClick={() => setShowPostPanel(!showPostPanel)}
           className="bg-slate-200 py-3 px-8 text-left text-gray-500 hover:bg-slate-100 hover:ring-1 ring-sky-600 w-[93%] rounded-full"
         >
           How are you feeling..
@@ -90,7 +91,7 @@ const Postbar = () => {
           Post
         </button> */}
       </div>
-      <PostPanel onClose={handelOnClose} visible={showPostPanel} />
+  { showPostPanel && <PostPanel onClose={setShowPostPanel} /> }
     </div>
   );
 };
