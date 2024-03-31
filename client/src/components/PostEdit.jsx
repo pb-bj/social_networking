@@ -1,15 +1,13 @@
 import React from "react";
 
-const PostEdit = ({ visible, onClose }) => {
-  if (!visible) return null;
-
+const PostEdit = ({ setShowEditPost }) => {
   return (
     <div className="fixed inset-0 bg-slate-400 bg-opacity-25 backdrop-blur-sm flex justify-center items-center">
       <div className=" mainblock bg-white py-5 px-3 flex flex-col rounded-md">
         <div className="top flex items-center justify-between mb-3">
           <div className="title font-medium">Edit Post</div>
           <div
-            onClick={onClose}
+            onClick={() => setShowEditPost(false)}
             className="cross bg-slate-200 py-1 px-1 rounded-full hover:bg-slate-300 hover:cursor-pointer"
           >
             <svg
@@ -36,32 +34,35 @@ const PostEdit = ({ visible, onClose }) => {
         <div className="bottom mt-3">
           <div className="title font-medium">Edit or add options below</div>
           <div className="sharebotm flex item-center justify-between mt-3 px-2 gap-9">
-         <div className="flex items-center"> <label
-              htmlFor="fileInput"
-              className="  cursor-pointer "
-            >
-              <span className="flex items-center" id="fileName"><svg
-                xmlns="http://www.w3.org/2000/svg"
-                viewBox="0 0 16 16"
-                fill="currentColor"
-                className="w-4 h-6"
-              >
-                <path
-                  fillRule="evenodd"
-                  d="M2 4a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V4Zm10.5 5.707a.5.5 0 0 0-.146-.353l-1-1a.5.5 0 0 0-.708 0L9.354 9.646a.5.5 0 0 1-.708 0L6.354 7.354a.5.5 0 0 0-.708 0l-2 2a.5.5 0 0 0-.146.353V12a.5.5 0 0 0 .5.5h8a.5.5 0 0 0 .5-.5V9.707ZM12 5a1 1 0 1 1-2 0 1 1 0 0 1 2 0Z"
-                  clipRule="evenodd"
+            <div className="flex items-center">
+              {" "}
+              <label htmlFor="fileInput" className="  cursor-pointer ">
+                <span className="flex items-center" id="fileName">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    viewBox="0 0 16 16"
+                    fill="currentColor"
+                    className="w-4 h-6"
+                  >
+                    <path
+                      fillRule="evenodd"
+                      d="M2 4a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V4Zm10.5 5.707a.5.5 0 0 0-.146-.353l-1-1a.5.5 0 0 0-.708 0L9.354 9.646a.5.5 0 0 1-.708 0L6.354 7.354a.5.5 0 0 0-.708 0l-2 2a.5.5 0 0 0-.146.353V12a.5.5 0 0 0 .5.5h8a.5.5 0 0 0 .5-.5V9.707ZM12 5a1 1 0 1 1-2 0 1 1 0 0 1 2 0Z"
+                      clipRule="evenodd"
+                    />
+                  </svg>{" "}
+                  <div>image</div>
+                </span>
+                <input
+                  id="fileInput"
+                  type="file"
+                  className="hidden"
+                  onChange={(e) => {
+                    const fileName = e.target.files[0].name;
+                    document.getElementById("fileName").textContent = fileName;
+                  }}
                 />
-              </svg> <div>image</div></span>
-              <input
-                id="fileInput"
-                type="file"
-                className="hidden"
-                onChange={(e) => {
-                  const fileName = e.target.files[0].name;
-                  document.getElementById("fileName").textContent = fileName;
-                }}
-              />
-            </label></div>
+              </label>
+            </div>
 
             <div className="Clipicon flex gap-1 items-center">
               <svg

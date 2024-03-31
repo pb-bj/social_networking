@@ -28,10 +28,10 @@ const Feed = () => {
       <div className="feedContainer w-full bg-slate-100 px-8 grid gird-cols-0 md:grid-cols-3 md:gap-3   ">
         <div className="feedLeft mt-6 ">
           <EditProfile />
-          <FriendReq />
-          <FriendsCount />
+          {/* <FriendReq />
+          <FriendsCount /> */}
         </div>
-        <div className="feedCenter mt-6 md:col-span-2 h-screen overflow-y-scroll">
+        <div className="feedCenter mt-6 md:col-span-2 ">
           <Postbar />
           <div className="scroll mt-3 ">
             <Post posts={posts} />
