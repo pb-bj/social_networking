@@ -12,21 +12,21 @@ import Layout from "./Layout"
 const App = () => {
   return (
 
-        <BrowserRouter>
-          <Routes>
-              {/* register and log in here  */}
-              <Route path="/login" element={<Login/>}/>
-              <Route path="/register" element={<Register/>}/>
-              <Route path="/resetPassword" element={<ResetPassword/>}/> 
+    <BrowserRouter>
+      <Routes>
+        {/* register and log in here  */}
+        <Route path="/login" element={<Login />} />
+        <Route path="/register" element={<Register />} />
+        <Route path="/resetPassword" element={<ResetPassword />} />
 
-              {/* Profile page goes here */}
-              <Route path="/" element={<Layout />} >
-                <Route index element={<Home/>}/>
-                  <Route path="/profile" element={<MyProfile />} />
-              </Route>
+        {/* Profile page goes here */}
+        <Route path="/" element={<Layout />} >
+          <Route index element={<Home />} />
+          <Route path="/profile" element={<MyProfile />} />
+        </Route>
 
-          </Routes>
-        </BrowserRouter>
+      </Routes>
+    </BrowserRouter>
 
   );
 };

@@ -9,17 +9,17 @@ import { getFeedPostsRequest } from "../services/postApi";
 const Feed = () => {
   const [posts, setPosts] = useState([]);
 
-  useEffect(() => {
-    const feedPosts = async () => {
-      try {
-        const result = await getFeedPostsRequest();
-        setPosts(result);
-        console.log(result);
-      } catch (error) {
-        console.log(error);
-      }
-    };
+  const feedPosts = async () => {
+    try {
+      const result = await getFeedPostsRequest();
+      setPosts(result);
+      console.log(result)
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
+  useEffect(() => {
     feedPosts();
   }, []);
   return (

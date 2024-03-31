@@ -27,9 +27,9 @@ export const getFeedPostsRequest = async () => {
 export const getUserPostsRequest = async (userId) => {
     try {
         const response = await axios.get(`${API_URL}/api/get-user-post/${userId}`, {
-            headers: {
-                Authorization: `Bearer ${localStorage.getItem('token')}`
-            }
+            // headers: {
+            //     Authorization: `Bearer ${token}`
+            // }
         });
         return response.data;
     } catch (error) {

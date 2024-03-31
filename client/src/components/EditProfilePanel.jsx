@@ -13,7 +13,7 @@ const EditProfilePanel = () => {
               alt=""
             />
 
-            <div className="name mt-1 font-semibold">Jhon Doe</div>
+            <div className="name mt-1 font-semibold">Jhon </div>
             <label
               htmlFor="fileInput"
               className="mt-3 bg-sky-200 px-10 py-3 rounded-md text-sm  cursor-pointer hover:bg-white hover:ring-1 hover:ring-sky-400 hover:shadow-lg text-slate-600 transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-11 duration-200"
