@@ -7,7 +7,7 @@ const Post = ({ posts }) => {
   const handelOnClose = () => setShowPostEdit(false);
   return (
     <>
-      {posts?.map((post) => (
+      {posts && posts.length >= 0 ? posts.map((post) => (
         <div key={post._id}>
           <div className="posts mt-5 flex flex-col py-10 px-7 bg-white">
             <div className="posttop flex justify-between items-center">
@@ -127,7 +127,7 @@ const Post = ({ posts }) => {
           <PostEdit onClose={handelOnClose} visible={showPostEdit} />
         </div>
 
-      ))}
+      )) : <p>No Post available</p>}
     </>
   );
 };
