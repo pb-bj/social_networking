@@ -1,8 +1,12 @@
 import { useUserDetails } from "../contexts/UserContext";
-import nopostImg from '../assets/images/nopost.png'
+import nopostImg from "../assets/images/nopost.png";
+import EditProfilePanel from "./EditProfilePanel";
+import { useState } from "react";
 
 const Profile = ({ posts }) => {
   const { usersInfo } = useUserDetails();
+  const [showEdit, setShowEdit] = useState(false);
+
   const orderPosts = posts.slice().sort((a, b) => {
     const postA = new Date(a.createdAt);
     const postB = new Date(b.createdAt);
@@ -10,12 +14,14 @@ const Profile = ({ posts }) => {
   });
 
   return (
-    <div>
+    <div className="md:w-[65%] m-auto ">
       {/* upper profile */}
       {usersInfo && usersInfo.user ? (
         <div
           className="flex h-70 mt-2 rounded-sm"
-          style={{ background: "linear-gradient(to top, white 50%, #38BDF8 50%)" }}
+          style={{
+            background: "linear-gradient(to top, white 50%, #38BDF8 50%)",
+          }}
         >
           <div className="leftside  py-16 px-7">
             <img
@@ -26,8 +32,27 @@ const Profile = ({ posts }) => {
           </div>
 
           <div className="rightside">
-            <div className="top md:pt-10 pt-20 md:text-[50px] text-[30px] font-bold text-white ">
-              {usersInfo.user.firstName} {usersInfo.user.lastName}
+            <div className="flex">
+              {" "}
+              {/* Change profile btn */}
+              <div className="top md:pt-10 pt-20 md:text-[50px] text-[30px] font-bold text-white ">
+                {usersInfo.user.firstName} {usersInfo.user.lastName}
+              </div>
+              <button
+                onClick={() => setShowEdit(!showEdit)}
+                className="bg-slate-200 ps-7 hover:bg-slate-300 rounded-full h-10 w-40  md:ms-12 mt-16 flex items-center gap-2 "
+              >
+                Edit Profile
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 24 24"
+                  fill="currentColor"
+                  className=" w-5 h-6"
+                >
+                  <path d="M21.731 2.269a2.625 2.625 0 0 0-3.712 0l-1.157 1.157 3.712 3.712 1.157-1.157a2.625 2.625 0 0 0 0-3.712ZM19.513 8.199l-3.712-3.712-8.4 8.4a5.25 5.25 0 0 0-1.32 2.214l-.8 2.685a.75.75 0 0 0 .933.933l2.685-.8a5.25 5.25 0 0 0 2.214-1.32l8.4-8.4Z" />
+                  <path d="M5.25 5.25a3 3 0 0 0-3 3v10.5a3 3 0 0 0 3 3h10.5a3 3 0 0 0 3-3V13.5a.75.75 0 0 0-1.5 0v5.25a1.5 1.5 0 0 1-1.5 1.5H5.25a1.5 1.5 0 0 1-1.5-1.5V8.25a1.5 1.5 0 0 1 1.5-1.5h5.25a.75.75 0 0 0 0-1.5H5.25Z" />
+                </svg>
+              </button>
             </div>
 
             <div className="bottom flex flex-col pt-10 ">
@@ -104,16 +129,16 @@ const Profile = ({ posts }) => {
               </div>
             </div>
           </div>
-
         </div>
-
-      ) : <p>Null</p>}
+      ) : (
+        <p>Null</p>
+      )}
 
       {/* lower profile */}
       {orderPosts ? (
         orderPosts.map((post) => (
           <div key={post._id}>
-            <div className="posts mt-5 flex flex-col py-10 px-7 bg-white">
+            <div className="posts mt-5 flex flex-col   py-10 px-7 bg-white">
               <div className="posttop flex justify-between items-center">
                 <div className="posttopin flex gap-4">
                   <img
@@ -162,23 +187,6 @@ const Profile = ({ posts }) => {
                         strokeLinecap="round"
                         strokeLinejoin="round"
                         d="m16.862 4.487 1.687-1.688a1.875 1.875 0 1 1 2.652 2.652L10.582 16.07a4.5 4.5 0 0 1-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 0 1 1.13-1.897l8.932-8.931Zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0 1 15.75 21H5.25A2.25 2.25 0 0 1 3 18.75V8.25A2.25 2.25 0 0 1 5.25 6H10"
-                      />
-                    </svg>
-                  </div>
-
-                  <div className="Options items-center py-2 px-2 bg-slate-200 hover:cursor-pointer hover:bg-sky-200 rounded-full">
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      fill="none"
-                      viewBox="0 0 24 24"
-                      strokeWidth={1.5}
-                      stroke="currentColor"
-                      className="w-5 h-5"
-                    >
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        d="M18 7.5v3m0 0v3m0-3h3m-3 0h-3m-2.25-4.125a3.375 3.375 0 1 1-6.75 0 3.375 3.375 0 0 1 6.75 0ZM3 19.235v-.11a6.375 6.375 0 0 1 12.75 0v.109A12.318 12.318 0 0 1 9.374 21c-2.331 0-4.512-.645-6.374-1.766Z"
                       />
                     </svg>
                   </div>
@@ -236,6 +244,7 @@ const Profile = ({ posts }) => {
       ) : (
         <img className="bg-white mt-3 px-32 py-10 " src={nopostImg} />
       )}
+     { showEdit && <EditProfilePanel  setShowEditProfile={setShowEdit} />}
     </div>
     // </div>
   );
