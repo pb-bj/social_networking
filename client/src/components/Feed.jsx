@@ -9,21 +9,20 @@ import { getFeedPostsRequest } from "../services/postApi";
 const Feed = () => {
   const [posts, setPosts] = useState([]);
 
+  useEffect(() => {
+    feedPosts();
+  }, []);
 
   const feedPosts = async () => {
     try {
       const result = await getFeedPostsRequest();
       setPosts(result);
-      console.log(result)
     } catch (error) {
       console.log(error);
     }
   };
 
 
-  useEffect(() => {
-    feedPosts();
-  }, []);
   return (
     <div>
       <div className="feedContainer w-full bg-slate-100 px-8 grid gird-cols-0 md:grid-cols-3 md:gap-3   ">
