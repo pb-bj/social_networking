@@ -5,7 +5,7 @@ import { useUserDetails } from "../contexts/UserContext";
 const EditProfile = () => {
   const { usersInfo } = useUserDetails();
   return (
-    <div className="profile  rounded-lg     py-10 px-7 bg-white ">
+    <div className="profile rounded-lg  md:w-[400px]   py-10 px-7 bg-white md:fixed overflow-y-auto ">
       <div className="profileinfotop flex justify-between ">
         <div className="profileInfo flex gap-3">
           <img

@@ -2,10 +2,12 @@ import { useUserDetails } from "../contexts/UserContext";
 import nopostImg from "../assets/images/nopost.png";
 import EditProfilePanel from "./EditProfilePanel";
 import { useState } from "react";
+import PostEdit from "./PostEdit";
 
 const Profile = ({ posts }) => {
   const { usersInfo } = useUserDetails();
   const [showEdit, setShowEdit] = useState(false);
+  const [showEditPost, setShowEditPost] = useState(false);
 
   const orderPosts = posts.slice().sort((a, b) => {
     const postA = new Date(a.createdAt);
@@ -170,9 +172,9 @@ const Profile = ({ posts }) => {
                       />
                     </svg>
                   </div>
-
+                  {/* edit post */}
                   <div
-                    onClick={() => setShowPostEdit(true)}
+                    onClick={() => setShowEditPost(!showEditPost)}
                     className="Options items-center py-2 px-2 bg-slate-200 hover:cursor-pointer hover:bg-yellow-200 rounded-full"
                   >
                     <svg
@@ -197,7 +199,7 @@ const Profile = ({ posts }) => {
               </div>
               <div className="postcontent mt-2">
                 <img
-                  className="w-full object-cover h-[450px]"
+                  className="mx-auto"
                   src={`${import.meta.env.VITE_BASE_URL}/${post.image}`}
                   alt=""
                 />
@@ -244,7 +246,8 @@ const Profile = ({ posts }) => {
       ) : (
         <img className="bg-white mt-3 px-32 py-10 " src={nopostImg} />
       )}
-     { showEdit && <EditProfilePanel  setShowEditProfile={setShowEdit} />}
+      {showEdit && <EditProfilePanel setShowEditProfile={setShowEdit} />}
+      {showEditPost && <PostEdit setShowEditPost={setShowEditPost} />}
     </div>
     // </div>
   );
