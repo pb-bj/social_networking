@@ -1,9 +1,61 @@
-import React from "react";
+import { useState, useEffect } from 'react';
+import { updatePostRequest, getUserPostsRequest } from "../services/postApi";
+import { useAuth } from "../contexts/AuthContext";
+import { toast } from "react-hot-toast";
 
-const PostEdit = ({ setShowEditPost }) => {
+const PostEdit = ({ setShowEditPost, posts, postId }) => {
+  const [content, setContent] = useState("");
+  const [image, setImage] = useState(null);
+  const [post, setPost] = useState(null);
+  const { token } = useAuth();
+
+
+  useEffect(() => {
+    const fetchPost = async () => {
+      try {
+        if (postId && token) {
+          const postData = await getUserPostsRequest(postId);
+          console.log(postData);
+          setPost(postData);
+          setContent(postData.content);
+          setContent(postData.image);
+        }
+      } catch (error) {
+        console.error("Failed to fetch post", error);
+      }
+    };
+
+    fetchPost();
+  }, [postId, token]);
+
+  const handleImage = (e) => {
+    setImage(e.target.files[0]);
+    const fileName = e.target.files[0].name;
+    document.getElementById("fileName").textContent = fileName;
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      const formData = new FormData();
+      formData.append("content", content);
+      formData.append("image", image);
+
+      if (postId && formData && token) {
+        await updatePostRequest(postId, formData, token);
+        setShowEditPost(false);
+        toast.success("Post updated");
+      } else {
+        toast.error("Failed to update post");
+      }
+    } catch (error) {
+      console.error("failed", error);
+    }
+  };
+
   return (
     <div className="fixed inset-0 bg-slate-400 bg-opacity-25 backdrop-blur-sm flex justify-center items-center">
-      <div className=" mainblock bg-white py-5 px-3 flex flex-col rounded-md">
+      <form className=" mainblock bg-white py-5 px-3 flex flex-col rounded-md" onSubmit={handleSubmit}>
         <div className="top flex items-center justify-between mb-3">
           <div className="title font-medium">Edit Post</div>
           <div
@@ -26,6 +78,8 @@ const PostEdit = ({ setShowEditPost }) => {
         </div>
 
         <textarea
+          value={content}
+          onChange={e => setContent(e.target.value)}
           className=" w-full h-32 bg-slate-200  placeholder:py-1  rounded-md focus:outline-none focus:ring-2 focus:ring-sky-300 px-3"
           placeholder="What's on your mind"
           rows="1"
@@ -56,10 +110,7 @@ const PostEdit = ({ setShowEditPost }) => {
                   id="fileInput"
                   type="file"
                   className="hidden"
-                  onChange={(e) => {
-                    const fileName = e.target.files[0].name;
-                    document.getElementById("fileName").textContent = fileName;
-                  }}
+                  onChange={handleImage}
                 />
               </label>
             </div>
@@ -103,12 +154,12 @@ const PostEdit = ({ setShowEditPost }) => {
               Audio
             </div>
 
-            <button className="bg-sky-400 text-white py-1 px-3 rounded-full ">
+            <button type="submit" className="bg-sky-400 text-white py-1 px-3 rounded-full ">
               Save Post
             </button>
           </div>
         </div>
-      </div>
+      </form> {/*adad */}
     </div>
   );
 };

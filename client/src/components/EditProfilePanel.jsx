@@ -52,40 +52,9 @@ const EditProfilePanel = ({ setShowEditProfile }) => {
     document.getElementById("fileName").textContent = fileName;
   };
 
-
-
-  // const handleSubmit = async (e) => {
-  //   e.preventDefault();
-  //   try {
-  //     const formData = new FormData();
-  //     formData.append("firstName", userData.firstName);
-  //     formData.append("lastName", userData.lastName);
-  //     formData.append("email", userData.email);
-  //     formData.append("gender", userData.gender);
-  //     formData.append("address", userData.address);
-  //     formData.append("work", userData.work);
-  //     formData.append("image", userData.image);
-
-  //     const decodedToken = jwtDecode(token);
-  //     const id = decodedToken._id;
-
-  //     if (id && formData && token) {
-  //       await updateUserDetails(id, formData, token);
-  //       setShowEditProfile(false)
-  //       toast.success("Post updated");
-  //     } else {
-  //       toast.error("Failed to update post");
-  //     }
-  //   } catch (error) {
-  //     console.error("failed", error);
-  //   }
-  // };
-
-
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      // Ensure all fields have values before proceeding
       if (
         userData.firstName &&
         userData.lastName &&
