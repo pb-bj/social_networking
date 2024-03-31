@@ -9,6 +9,7 @@ import { getFeedPostsRequest } from "../services/postApi";
 const Feed = () => {
   const [posts, setPosts] = useState([]);
 
+
   const feedPosts = async () => {
     try {
       const result = await getFeedPostsRequest();
@@ -18,6 +19,7 @@ const Feed = () => {
       console.log(error);
     }
   };
+
 
   useEffect(() => {
     feedPosts();
