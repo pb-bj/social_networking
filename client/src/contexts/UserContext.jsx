@@ -10,7 +10,6 @@ const UserProvider = ( {children} ) => {
 
     const getUserInfo = async () => {
         try {
-            console.log(token)
             if(token) {
                 const decodedToken = jwtDecode(token);
                  const id = decodedToken._id;
