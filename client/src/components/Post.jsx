@@ -127,7 +127,8 @@ const Post = ({ posts }) => {
           <PostEdit onClose={handelOnClose} visible={showPostEdit} />
         </div>
 
-      )) : <p>No Post available</p>}
+      )) : 
+      <p>No Post available</p>}
     </>
   );
 };

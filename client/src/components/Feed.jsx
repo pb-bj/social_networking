@@ -16,7 +16,7 @@ const Feed = () => {
       try {
         const result = await getFeedPostsRequest();
         setPosts(result);
-        console.log(result)
+        console.log(result);
       } catch (error) {
         console.log(error);
       }
@@ -32,11 +32,12 @@ const Feed = () => {
           <FriendReq />
           <FriendsCount />
         </div>
-        <div className="feedCenter mt-6 md:col-span-2">
+        <div className="feedCenter mt-6 md:col-span-2 h-screen overflow-y-scroll">
           <Postbar />
-          <Post posts={posts} />
+          <div className="scroll mt-3 ">
+            <Post posts={posts} />
+          </div>
         </div>
-
       </div>
     </div>
   );

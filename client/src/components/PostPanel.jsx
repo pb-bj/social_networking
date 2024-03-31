@@ -1,31 +1,37 @@
 import { useState } from "react";
-import { createPostRequest } from '../services/postApi';
+import { createPostRequest } from "../services/postApi";
 import { useAuth } from "../contexts/AuthContext";
-import { toast } from 'react-hot-toast'
+import { toast } from "react-hot-toast";
 
 const PostPanel = ({ onClose }) => {
-  const [content, setContent] = useState('');
+  const [content, setContent] = useState("");
   const [image, setImage] = useState(null);
   const { token } = useAuth();
+
+  const handleImage = (e) => {
+    setImage(e.target.files[0]);
+    const fileName = e.target.files[0].name;
+    document.getElementById("fileName").textContent = fileName;
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
       const formData = new FormData();
-      formData.append('content', content);
-      formData.append('image', image);
+      formData.append("content", content);
+      formData.append("image", image);
 
       if (formData && token) {
         await createPostRequest(formData, token);
         onClose();
-        toast.success('Post created')
+        toast.success("Post created");
       } else {
-        toast.error('Failed to post')
+        toast.error("Failed to post");
       }
     } catch (error) {
       console.error("failed", error);
     }
-  }
+  };
 
   return (
     <div className="fixed inset-0 bg-slate-400 bg-opacity-25 backdrop-blur-sm flex justify-center items-center ">
@@ -52,14 +58,13 @@ const PostPanel = ({ onClose }) => {
           </div>
         </div>
 
-        <form className="w-100" onSubmit={handleSubmit} >
+        <form className="w-100" onSubmit={handleSubmit}>
           <textarea
             value={content}
             onChange={(e) => setContent(e.target.value)}
-            className="p-1 bg-slate-200  placeholder:py-1  rounded-md focus:outline-none focus:ring-2 focus:ring-sky-300 px-3"
+            className="w-full h-32  bg-slate-200  placeholder:py-1  rounded-md focus:outline-none focus:ring-2 focus:ring-sky-300 px-3"
             placeholder="What's on your mind"
             rows="1"
-
           ></textarea>
           <div className="sharebotm flex item-center justify-between mt-3 px-2 gap-9">
             <div className="imageicon flex gap-1 items-center">
@@ -75,7 +80,42 @@ const PostPanel = ({ onClose }) => {
                   clipRule="evenodd"
                 />
               </svg>
-              <input type="file" onChange={(e) => setImage(e.target.files[0])} />
+
+              {/* Image button for post */}
+              <label htmlFor="fileInput" className="   cursor-pointer ">
+                <span className="flex items-center" id="fileName">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    viewBox="0 0 16 16"
+                    fill="currentColor"
+                    className="w-4 h-6"
+                  >
+                    <path
+                      fillRule="evenodd"
+                      d="M2 4a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V4Zm10.5 5.707a.5.5 0 0 0-.146-.353l-1-1a.5.5 0 0 0-.708 0L9.354 9.646a.5.5 0 0 1-.708 0L6.354 7.354a.5.5 0 0 0-.708 0l-2 2a.5.5 0 0 0-.146.353V12a.5.5 0 0 0 .5.5h8a.5.5 0 0 0 .5-.5V9.707ZM12 5a1 1 0 1 1-2 0 1 1 0 0 1 2 0Z"
+                      clipRule="evenodd"
+                    />
+                  </svg>{" "}
+                  <div>image</div>
+                </span>
+                <input
+                  id="fileInput"
+                  type="file"
+                  className="hidden"
+                  onChange={handleImage}
+                  // onChange={(e) => {
+                  //   const fileName = e.target.files[0].name;
+                  //   document.getElementById("fileName").textContent = fileName;
+                  // }}
+                />
+              </label>
+
+              {/* update the for the image here */}
+
+              {/* <input
+                type="file"
+                onChange={(e) => setImage(e.target.files[0])}
+              /> */}
             </div>
             <div className="Clipicon flex gap-1 items-center">
               <svg
@@ -115,7 +155,10 @@ const PostPanel = ({ onClose }) => {
               </svg>
               Audio
             </div>
-            <button type="submit" className="bg-sky-400 text-white py-1 px-3 rounded-full" >
+            <button
+              type="submit"
+              className="bg-sky-400 text-white py-1 px-3 rounded-full"
+            >
               Post
             </button>
           </div>
