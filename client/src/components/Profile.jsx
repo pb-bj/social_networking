@@ -3,12 +3,12 @@ import nopostImg from "../assets/images/nopost.png";
 import EditProfilePanel from "./EditProfilePanel";
 import { useState, useEffect } from "react";
 import PostEdit from "./PostEdit";
-import { useAuth } from '../contexts/AuthContext';
-import { toast } from 'react-hot-toast'
-import { deletePostRequest } from '../services/postApi'
+import { useAuth } from "../contexts/AuthContext";
+import { toast } from "react-hot-toast";
+import { deletePostRequest } from "../services/postApi";
 
 const Profile = ({ posts }) => {
-  console.log(posts)
+  console.log(posts);
   const { usersInfo } = useUserDetails();
   const [showEdit, setShowEdit] = useState(false);
   const [showEditPost, setShowEditPost] = useState(false);
@@ -29,13 +29,13 @@ const Profile = ({ posts }) => {
     try {
       const result = await deletePostRequest(postId, token);
       if (result) {
-        setUserPost(userPost.filter(post => post._id !== postId))
-        toast.success('Post Deleted');
+        setUserPost(userPost.filter((post) => post._id !== postId));
+        toast.success("Post Deleted");
       } else {
-        toast.error('Failed to delete');
+        toast.error("Failed to delete");
       }
     } catch (error) {
-      console.error('Error deleting post:', error);
+      console.error("Error deleting post:", error);
     }
   };
 
@@ -51,31 +51,31 @@ const Profile = ({ posts }) => {
         >
           <div className="leftside  col-span-2 ">
             <div className="inner flex flex-col items-center gap-3 py-3">
-            <img
-              className=" object-cover rounded-full md:w-40 md:h-40 w-20 h-20"
-              // src={usersInfo?.user?.image}
-              src={
-                usersInfo?.user?.image
-                  ? `${import.meta.env.VITE_BASE_URL}/${usersInfo?.user?.image}`
-                  : "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png"
-              }
-              alt=""
-            />
-            <button
-              onClick={() => setShowEdit(!showEdit)}
-              className="bg-slate-200  hover:bg-slate-300 rounded-full text-[12px]  flex items-center gap-2 py-1 px-3  md:py-2 md:px-5"
-            >
-              Edit Profile
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                viewBox="0 0 24 24"
-                fill="currentColor"
-                className=" md:w-5 md:h-6 w-3 h-3"
+              <img
+                className=" object-cover rounded-full md:w-40 md:h-40 w-20 h-20"
+                // src={usersInfo?.user?.image}
+                src={
+                  usersInfo?.user?.image
+                    ? `${import.meta.env.VITE_BASE_URL}/${usersInfo?.user?.image}`
+                    : "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png"
+                }
+                alt=""
+              />
+              <button
+                onClick={() => setShowEdit(!showEdit)}
+                className="bg-slate-200  hover:bg-slate-300 rounded-full text-[12px]  flex items-center gap-2 py-1 px-3  md:py-2 md:px-5"
               >
-                <path d="M21.731 2.269a2.625 2.625 0 0 0-3.712 0l-1.157 1.157 3.712 3.712 1.157-1.157a2.625 2.625 0 0 0 0-3.712ZM19.513 8.199l-3.712-3.712-8.4 8.4a5.25 5.25 0 0 0-1.32 2.214l-.8 2.685a.75.75 0 0 0 .933.933l2.685-.8a5.25 5.25 0 0 0 2.214-1.32l8.4-8.4Z" />
-                <path d="M5.25 5.25a3 3 0 0 0-3 3v10.5a3 3 0 0 0 3 3h10.5a3 3 0 0 0 3-3V13.5a.75.75 0 0 0-1.5 0v5.25a1.5 1.5 0 0 1-1.5 1.5H5.25a1.5 1.5 0 0 1-1.5-1.5V8.25a1.5 1.5 0 0 1 1.5-1.5h5.25a.75.75 0 0 0 0-1.5H5.25Z" />
-              </svg>
-            </button>
+                Edit Profile
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 24 24"
+                  fill="currentColor"
+                  className=" md:w-5 md:h-6 w-3 h-3"
+                >
+                  <path d="M21.731 2.269a2.625 2.625 0 0 0-3.712 0l-1.157 1.157 3.712 3.712 1.157-1.157a2.625 2.625 0 0 0 0-3.712ZM19.513 8.199l-3.712-3.712-8.4 8.4a5.25 5.25 0 0 0-1.32 2.214l-.8 2.685a.75.75 0 0 0 .933.933l2.685-.8a5.25 5.25 0 0 0 2.214-1.32l8.4-8.4Z" />
+                  <path d="M5.25 5.25a3 3 0 0 0-3 3v10.5a3 3 0 0 0 3 3h10.5a3 3 0 0 0 3-3V13.5a.75.75 0 0 0-1.5 0v5.25a1.5 1.5 0 0 1-1.5 1.5H5.25a1.5 1.5 0 0 1-1.5-1.5V8.25a1.5 1.5 0 0 1 1.5-1.5h5.25a.75.75 0 0 0 0-1.5H5.25Z" />
+                </svg>
+              </button>
             </div>
           </div>
 
@@ -170,7 +170,13 @@ const Profile = ({ posts }) => {
       {orderPosts.length > 0 ? (
         orderPosts.map((post) => (
           <div key={post._id}>
-            {showEditPost && <PostEdit setShowEditPost={setShowEditPost} posts={posts} postId={post._id} />}
+            {showEditPost && (
+              <PostEdit
+                setShowEditPost={setShowEditPost}
+                posts={posts}
+                postId={post._id}
+              />
+            )}
             <div className="posts mt-5 flex flex-col   py-10 px-7 bg-white">
               <div className="posttop flex justify-between items-center">
                 <div className="posttopin flex gap-4">
@@ -192,7 +198,10 @@ const Profile = ({ posts }) => {
                   </div>
                 </div>
                 <div className="right flex gap-2">
-                  <div className="Options items-center py-2 px-2 bg-slate-200 hover:cursor-pointer hover:bg-red-200 rounded-full" onClick={() => handleDeletePost(post._id)}>
+                  <div
+                    className="Options items-center py-2 px-2 bg-slate-200 hover:cursor-pointer hover:bg-red-200 rounded-full"
+                    onClick={() => handleDeletePost(post._id)}
+                  >
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
                       fill="none"
@@ -280,7 +289,7 @@ const Profile = ({ posts }) => {
           </div>
         ))
       ) : (
-        <img className="bg-white mt-3 px-32 py-10 " src={nopostImg} />
+        <img className="bg-white mt-3 px-52 py-10  " src={nopostImg} />
       )}
       {showEdit && <EditProfilePanel setShowEditProfile={setShowEdit} />}
     </div>
