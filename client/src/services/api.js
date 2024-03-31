@@ -34,3 +34,17 @@ export const userDetails = async (id) => {
         return error.response.data;
     }
 }
+
+export const updateUserDetails = async (userId, formData, token) => {
+    try {
+        const response = await axios.put(`${API_URL}/api/user-profile/edit/${userId}`, formData, {
+            headers: {
+                Authorization: `Bearer ${token}`
+            }
+        });
+        // console.log(response.data)
+        return response.data;
+    } catch (error) {
+        return error.response.data;
+    }
+};
