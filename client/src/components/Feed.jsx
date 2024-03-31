@@ -9,6 +9,7 @@ import { getFeedPostsRequest } from "../services/postApi";
 const Feed = () => {
   const [posts, setPosts] = useState([]);
 
+
   const feedPosts = async () => {
     try {
       const result = await getFeedPostsRequest();
@@ -18,6 +19,7 @@ const Feed = () => {
       console.log(error);
     }
   };
+
 
   useEffect(() => {
     feedPosts();
@@ -30,11 +32,12 @@ const Feed = () => {
           <FriendReq />
           <FriendsCount />
         </div>
-        <div className="feedCenter mt-6 md:col-span-2">
+        <div className="feedCenter mt-6 md:col-span-2 h-screen overflow-y-scroll">
           <Postbar />
-          <Post posts={posts} />
+          <div className="scroll mt-3 ">
+            <Post posts={posts} />
+          </div>
         </div>
-
       </div>
     </div>
   );
