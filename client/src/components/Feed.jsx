@@ -1,11 +1,9 @@
 import React, { useEffect, useState } from "react";
-// import Profile1 from "../assets/profile/profile1.jpg";
 import Postbar from "./Postbar";
 import Post from "./Post";
 import EditProfile from "./EditProfile";
 import FriendReq from "./FriendReq";
 import FriendsCount from "./FriendsCount";
-// import PostPanel from "./PostPanel";
 import { getFeedPostsRequest } from "../services/postApi";
 
 const Feed = () => {
