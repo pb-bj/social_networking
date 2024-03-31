@@ -32,9 +32,8 @@ exports.readFeedPost = async (req, res) => {
 
 exports.readUserPost = async (req, res) => {
     try {
-        const postId = req.params.id;
-        const userId = req.user._id;
-        let post = await PostModel.findById({ _id: postId, userId });
+        const userId = req.params.id;
+        let post = await PostModel.find({ userId }).exec();
         if (!post) {
             return res.status(404).json({ error: 'No post available!' });
         }
