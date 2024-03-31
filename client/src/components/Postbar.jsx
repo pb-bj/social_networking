@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-// import Profile1 from "../assets/profile/profile1.jpg";
 import PostPanel from "./PostPanel";
 import { useUserDetails } from "../contexts/UserContext";
 
@@ -91,7 +90,7 @@ const Postbar = () => {
           Post
         </button> */}
       </div>
-  { showPostPanel && <PostPanel onClose={setShowPostPanel} /> }
+      {showPostPanel && <PostPanel onClose={setShowPostPanel} />}
     </div>
   );
 };

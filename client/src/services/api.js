@@ -16,9 +16,8 @@ export const registerPostRequest = async (formData) => {
 };
 
 export const loginPostRequest = async (formData) => {
-    // axios.defaults.withCredentials = true;
     try {
-        const response = await axios.post(`${API_URL}/auth/login`, formData);
+        const response = await axios.post(`${API_URL}/auth/login`, formData, { withCredentials: true });
         return response.data;
 
     } catch (error) {
