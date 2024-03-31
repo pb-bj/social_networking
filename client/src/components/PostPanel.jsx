@@ -68,7 +68,7 @@ const PostPanel = ({ onClose }) => {
           ></textarea>
           <div className="sharebotm flex item-center justify-between mt-3 px-2 gap-9">
             <div className="imageicon flex gap-1 items-center">
-              
+
 
               {/* Image button for post */}
               <label htmlFor="fileInput" className="   cursor-pointer ">
@@ -92,10 +92,10 @@ const PostPanel = ({ onClose }) => {
                   type="file"
                   className="hidden"
                   onChange={handleImage}
-                  // onChange={(e) => {
-                  //   const fileName = e.target.files[0].name;
-                  //   document.getElementById("fileName").textContent = fileName;
-                  // }}
+                // onChange={(e) => {
+                //   const fileName = e.target.files[0].name;
+                //   document.getElementById("fileName").textContent = fileName;
+                // }}
                 />
               </label>
 

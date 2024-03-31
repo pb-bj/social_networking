@@ -3,6 +3,7 @@ import PostEdit from "./PostEdit";
 import nopost from "../assets/images/nopost.png";
 
 const Post = ({ posts }) => {
+  const orderPosts = posts.slice().sort((a, b) => {
   if (!Array.isArray(posts)) {
     return null;
   } 
@@ -13,6 +14,7 @@ const Post = ({ posts }) => {
 
     
   });
+  console.log(orderPosts)
 
   return (
     <>

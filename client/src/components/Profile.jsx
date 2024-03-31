@@ -17,7 +17,7 @@ const Profile = ({ posts }) => {
 
   useEffect(() => {
     setUserPost(posts);
-  }, [posts]);
+  }, [posts, usersInfo]);
 
   const orderPosts = userPost.slice().sort((a, b) => {
     const postA = new Date(a.createdAt);
