@@ -1,23 +1,29 @@
 import { useState } from "react";
 import { createPostRequest } from '../services/postApi';
+import { useAuth } from "../contexts/AuthContext";
+import { toast } from 'react-hot-toast'
 
 const PostPanel = ({ onClose }) => {
-  const [ content, setContent ] = useState('');
-  const [ image, setImage ] = useState(null);
+  const [content, setContent] = useState('');
+  const [image, setImage] = useState(null);
+  const { token } = useAuth();
 
-  
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
       const formData = new FormData();
-        formData.append('content', content);
-        formData.append('image', image);
-      
-        console.log(formData)
-      const postContent = await createPostRequest(formData);
-        console.log(postContent);
-    } catch(error) {
+      formData.append('content', content);
+      formData.append('image', image);
 
+      if (formData && token) {
+        await createPostRequest(formData, token);
+        onClose();
+        toast.success('Post created')
+      } else {
+        toast.error('Failed to post')
+      }
+    } catch (error) {
+      console.error("failed", error);
     }
   }
 
@@ -26,7 +32,7 @@ const PostPanel = ({ onClose }) => {
       <div className="mainblock bg-white py-5 px-3 flex flex-col rounded-md">
         <div className="top flex items-center justify-between  mb-3">
           <div className="title font-medium">Create Post</div>{" "}
-          <div 
+          <div
             onClick={() => onClose(false)}
             className="cross bg-slate-200 py-1 px-1 rounded-full hover:bg-slate-300 hover:cursor-pointer"
           >
@@ -46,14 +52,14 @@ const PostPanel = ({ onClose }) => {
           </div>
         </div>
 
-        <form className="w-100" onSubmit={ handleSubmit } >
+        <form className="w-100" onSubmit={handleSubmit} >
           <textarea
             value={content}
-            onChange={ (e) => setContent(e.target.value) }
+            onChange={(e) => setContent(e.target.value)}
             className="p-1 bg-slate-200  placeholder:py-1  rounded-md focus:outline-none focus:ring-2 focus:ring-sky-300 px-3"
             placeholder="What's on your mind"
             rows="1"
-          
+
           ></textarea>
           <div className="sharebotm flex item-center justify-between mt-3 px-2 gap-9">
             <div className="imageicon flex gap-1 items-center">
@@ -69,7 +75,7 @@ const PostPanel = ({ onClose }) => {
                   clipRule="evenodd"
                 />
               </svg>
-              <input type="file" onChange={(e) => setImage(e.target.files[0])}/>
+              <input type="file" onChange={(e) => setImage(e.target.files[0])} />
             </div>
             <div className="Clipicon flex gap-1 items-center">
               <svg
@@ -98,17 +104,17 @@ const PostPanel = ({ onClose }) => {
               Attachment
             </div>
             <div className="Attachmenticon flex gap-1 items-center">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              viewBox="0 0 24 24"
-              fill="currentColor"
-              className="w-4 h-6"
-            >
-              <path d="M8.25 4.5a3.75 3.75 0 1 1 7.5 0v8.25a3.75 3.75 0 1 1-7.5 0V4.5Z" />
-              <path d="M6 10.5a.75.75 0 0 1 .75.75v1.5a5.25 5.25 0 1 0 10.5 0v-1.5a.75.75 0 0 1 1.5 0v1.5a6.751 6.751 0 0 1-6 6.709v2.291h3a.75.75 0 0 1 0 1.5h-7.5a.75.75 0 0 1 0-1.5h3v-2.291a6.751 6.751 0 0 1-6-6.709v-1.5A.75.75 0 0 1 6 10.5Z" />
-            </svg>
-            Audio
-          </div>
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 24 24"
+                fill="currentColor"
+                className="w-4 h-6"
+              >
+                <path d="M8.25 4.5a3.75 3.75 0 1 1 7.5 0v8.25a3.75 3.75 0 1 1-7.5 0V4.5Z" />
+                <path d="M6 10.5a.75.75 0 0 1 .75.75v1.5a5.25 5.25 0 1 0 10.5 0v-1.5a.75.75 0 0 1 1.5 0v1.5a6.751 6.751 0 0 1-6 6.709v2.291h3a.75.75 0 0 1 0 1.5h-7.5a.75.75 0 0 1 0-1.5h3v-2.291a6.751 6.751 0 0 1-6-6.709v-1.5A.75.75 0 0 1 6 10.5Z" />
+              </svg>
+              Audio
+            </div>
             <button type="submit" className="bg-sky-400 text-white py-1 px-3 rounded-full" >
               Post
             </button>

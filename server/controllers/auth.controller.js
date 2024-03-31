@@ -41,7 +41,7 @@ exports.loginUserAccount = async (req, res) => {
 
         const token = jwt.sign({ _id: checkUser._id }, process.env.JWT_SECRET, { expiresIn: '1h' });
         res.cookie('token', token, { httpOnly: true, maxAge: 3600000 });
-        res.header('Authorization', token).json({ message: 'Login successful', token });
+        res.json({ message: 'Login successful', token });
     } catch (error) {
         res.status(500).json({ message: 'Internal Server Error' });
         // console.log(error)
